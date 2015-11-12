@@ -66,7 +66,7 @@ namespace SkiRunRater
                 //
                 Console.WriteLine(
                     leftTab + "1. Display All Ski Run Information" + Environment.NewLine +
-                     leftTab + "E. Exit" + Environment.NewLine);
+                    leftTab + "E. Exit" + Environment.NewLine);
 
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
                 switch (userResponse.KeyChar)
@@ -93,15 +93,23 @@ namespace SkiRunRater
             Console.CursorVisible = true;
         }
 
+        /// <summary>
+        /// method to display all ski run info
+        /// </summary>
         public static void DisplaySkiRuns()
         {
+            DisplayReset();
+
             List<SkiRun> SkiRunClassList = CRUDSkiRun.ReadAllSkiRunsFromTextFile(DataSettings.dataFilePath);
 
             foreach (SkiRun skiRun in SkiRunClassList)
             {
                 DisplayMessage("Ski Run: " + skiRun.Name);
                 DisplayMessage("Vertical: " + skiRun.Vertical);
+                Console.WriteLine(Environment.NewLine);
             }
+
+            DisplayContinuePrompt();
         }
 
         /// <summary>
@@ -118,7 +126,7 @@ namespace SkiRunRater
             Console.BackgroundColor = ConsoleColor.White;
 
             Console.WriteLine(ConsoleUtil.FillStringWithSpaces(WINDOW_WIDTH));
-            Console.WriteLine(ConsoleUtil.Center("The Deadly Dinner Party Game", WINDOW_WIDTH));
+            Console.WriteLine(ConsoleUtil.Center("The Ski Run Rater", WINDOW_WIDTH));
             Console.WriteLine(ConsoleUtil.FillStringWithSpaces(WINDOW_WIDTH));
 
             Console.ResetColor();

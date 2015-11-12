@@ -12,10 +12,11 @@ namespace SkiRunRater
     {
         static void Main(string[] args)
         {
+            // add test data to the data file
+            InitializeDataFile.AddTestData();
 
-            InitializeDataFile.AddTestData(DataSettings.dataFilePath);
-
-            Controller appContoller = new Controller(DataSettings.dataFilePath);
+            // instantiate the controller
+            Controller appContoller = new Controller();
         }
 
         //static void DemoSkiRunReadWrite(string dataFile)

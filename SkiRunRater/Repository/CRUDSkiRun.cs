@@ -31,7 +31,7 @@ namespace SkiRunRater
             }
 
             // initialize a FileStream object for writing
-            FileStream wfileStream = File.OpenWrite(dataFilePath);
+            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
 
             // wrap the FieldStream object in a using statement to ensure of the dispose
             using (wfileStream)
@@ -64,7 +64,7 @@ namespace SkiRunRater
             List<SkiRun> skiRunClassList = new List<SkiRun>();
 
             // initialize a FileStream object for reading
-            FileStream rFileStream = File.OpenRead(dataFilePath);
+            FileStream rFileStream = File.OpenRead(DataSettings.dataFilePath);
 
             // wrap the FieldStream object in a using statement to ensure of the dispose
             using (rFileStream)

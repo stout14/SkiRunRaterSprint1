@@ -36,13 +36,6 @@ namespace SkiRunRater
 
         public Controller()
         {
-
-        }
-
-        public Controller(string dataFilePath)
-        {
-            _dataFilePath = dataFilePath;
-
             ApplicationControl();
         }
 
