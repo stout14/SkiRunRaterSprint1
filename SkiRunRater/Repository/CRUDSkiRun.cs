@@ -10,8 +10,13 @@ namespace SkiRunRater
     /// <summary>
     /// method to write all ski run information to the date file
     /// </summary>
-    public static class CRUDOperations
+    public static class CRUDSkiRun
     {
+        /// <summary>
+        /// method to write all ski run info to the data file
+        /// </summary>
+        /// <param name="skiRuns">list of ski run info</param>
+        /// <param name="dataFilePath">path to the data file</param>
         public static void WriteAllSkiRunsToTextFile(List<SkiRun> skiRuns, string dataFilePath)
         {
             string objectBuildString;

@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace SkiRunRater
 {
-    public class ConsoleView
+    public static class ConsoleView
     {
+        #region ENUMERABLES
+
+        private enum CRUDActions
+        {
+            None,
+            DisplayAllSkiRunInfo
+        }
+
+        #endregion
+
         #region FIELDS
 
         //
@@ -17,7 +27,7 @@ namespace SkiRunRater
         private const int WINDOW_HEIGHT = ViewSettings.WINDOW_HEIGHT;
 
         //
-        // horizontal and verical margins in console window for display
+        // horizontal and vertical margins in console window for display
         //
         private const int DISPLAY_HORIZONTAL_MARGIN = ViewSettings.DISPLAY_HORIZONTAL_MARGIN;
         private const int DISPALY_VERITCAL_MARGIN = ViewSettings.DISPALY_VERITCAL_MARGIN;
@@ -26,19 +36,78 @@ namespace SkiRunRater
 
         #region CONSTRUCTORS
 
-        public ConsoleView()
-        {
-
-        }
-
         #endregion
 
         #region METHODS
 
+
+        /// <summary>
+        /// provides a menu with options to display the information of the current objects in the game
+        /// </summary>
+        public static void DisplayCURDMenu()
+        {
+            bool usingMenu = true;
+
+            while (usingMenu)
+            {
+                //
+                // set a string variable with a length equal to the horizontal margin and filled with spaces
+                //
+                string leftTab = ConsoleUtil.FillStringWithSpaces(DISPLAY_HORIZONTAL_MARGIN);
+
+                //
+                // set up display area
+                //
+                DisplayReset();
+                Console.CursorVisible = false;
+
+                //
+                // display the menu
+                //
+                Console.WriteLine(
+                    leftTab + "1. Display All Ski Run Information" + Environment.NewLine +
+                     leftTab + "E. Exit" + Environment.NewLine);
+
+                ConsoleKeyInfo userResponse = Console.ReadKey(true);
+                switch (userResponse.KeyChar)
+                {
+                    case '1':
+                        ConsoleView.DisplaySkiRuns();
+                        break;
+                    case 'E':
+                        usingMenu = false;
+                        break;
+                    default:
+                        Console.WriteLine(
+                            "It appears you have selected an incorrect choice." + Environment.NewLine +
+                            "Press any key to continue or the ESC key to exit.");
+
+                        userResponse = Console.ReadKey(true);
+                        if (userResponse.Key == ConsoleKey.Escape)
+                        {
+                            usingMenu = false;
+                        }
+                        break;
+                }
+            }
+            Console.CursorVisible = true;
+        }
+
+        public static void DisplaySkiRuns()
+        {
+            List<SkiRun> SkiRunClassList = CRUDSkiRun.ReadAllSkiRunsFromTextFile(DataSettings.dataFilePath);
+
+            foreach (SkiRun skiRun in SkiRunClassList)
+            {
+                DisplayMessage("Ski Run: " + skiRun.Name);
+                DisplayMessage("Vertical: " + skiRun.Vertical);
+            }
+        }
+
         /// <summary>
         /// reset display to default size and colors including the header
         /// </summary>
-        public void DisplayReset()
+        public static void DisplayReset()
         {
             Console.SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -59,7 +128,7 @@ namespace SkiRunRater
         /// <summary>
         /// display the Continue prompt
         /// </summary>
-        public void DisplayContinuePrompt()
+        public static void DisplayContinuePrompt()
         {
             Console.CursorVisible = false;
 
@@ -77,7 +146,7 @@ namespace SkiRunRater
         /// <summary>
         /// display the Exit prompt
         /// </summary>
-        public void DisplayExitPrompt()
+        public static void DisplayExitPrompt()
         {
             DisplayReset();
 
@@ -94,7 +163,7 @@ namespace SkiRunRater
         /// <summary>
         /// display the welcome screen
         /// </summary>
-        public void DisplayWelcomeScreen()
+        public static void DisplayWelcomeScreen()
         {
             Console.Clear();
             Console.ResetColor();
@@ -117,7 +186,7 @@ namespace SkiRunRater
         /// display a message in the message area
         /// </summary>
         /// <param name="message">string to display</param>
-        public void DisplayMessage(string message)
+        public static void DisplayMessage(string message)
         {
             //
             // calculate the message area location on the console window
@@ -153,7 +222,7 @@ namespace SkiRunRater
         /// display a message in the message area without a new line for the prompt
         /// </summary>
         /// <param name="message">string to display</param>
-        public void DisplayPromptMessage(string message)
+        public static void DisplayPromptMessage(string message)
         {
             //
             // calculate the message area location on the console window

@@ -16,9 +16,9 @@ namespace SkiRunRater
 
 
         #region FIELDS
+
         private string _dataFilePath;
-
-
+        List<SkiRun> _skiRuns = new List<SkiRun>();
 
         #endregion
 
@@ -42,13 +42,22 @@ namespace SkiRunRater
         public Controller(string dataFilePath)
         {
             _dataFilePath = dataFilePath;
+
+            ApplicationControl();
         }
 
         #endregion
 
         #region METHODS
 
+        private void ApplicationControl()
+        {            
+            ConsoleView.DisplayWelcomeScreen();
 
+            _skiRuns = CRUDSkiRun.ReadAllSkiRunsFromTextFile(_dataFilePath);
+
+            ConsoleView.DisplaySkiRuns();
+        }
 
         #endregion
 
