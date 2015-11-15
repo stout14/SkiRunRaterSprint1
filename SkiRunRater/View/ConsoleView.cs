@@ -100,7 +100,7 @@ namespace SkiRunRater
         {
             DisplayReset();
 
-            List<SkiRun> SkiRunClassList = CRUDSkiRun.ReadAllSkiRunsFromTextFile(DataSettings.dataFilePath);
+            List<SkiRun> SkiRunClassList = SkiRunRepository.GetSkiRunsData(DataSettings.dataFilePath);
 
             foreach (SkiRun skiRun in SkiRunClassList)
             {

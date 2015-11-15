@@ -8,6 +8,7 @@ namespace SkiRunRater
 {
     public class SkiRun
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public int Vertical { get; set; }
 
@@ -16,8 +17,9 @@ namespace SkiRunRater
 
         }
 
-        public SkiRun(string Name, int vertical)
+        public SkiRun(int id, string Name, int vertical)
         {
+            this.ID = id;
             this.Name = Name;
             this.Vertical = vertical;
         }

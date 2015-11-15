@@ -47,7 +47,7 @@ namespace SkiRunRater
         {            
             ConsoleView.DisplayWelcomeScreen();
 
-            _skiRuns = CRUDSkiRun.ReadAllSkiRunsFromTextFile(_dataFilePath);
+            _skiRuns = SkiRunRepository.GetSkiRunsData(_dataFilePath);
 
             ConsoleView.DisplaySkiRuns();
         }

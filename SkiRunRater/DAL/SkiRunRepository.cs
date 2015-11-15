@@ -10,52 +10,16 @@ namespace SkiRunRater
     /// <summary>
     /// method to write all ski run information to the date file
     /// </summary>
-    public static class CRUDSkiRun
+    public static class SkiRunRepository
     {
-        /// <summary>
-        /// method to write all ski run info to the data file
-        /// </summary>
-        /// <param name="skiRuns">list of ski run info</param>
-        /// <param name="dataFilePath">path to the data file</param>
-        public static void WriteAllSkiRunsToTextFile(List<SkiRun> skiRuns, string dataFilePath)
-        {
-            string objectBuildString;
-
-            List<string> skiRunStringList = new List<string>();
-
-            // build the list to write to the text file line by line
-            foreach (var objectString in skiRuns)
-            {
-                objectBuildString = objectString.Name + "," + objectString.Vertical;
-                skiRunStringList.Add(objectBuildString);
-            }
-
-            // initialize a FileStream object for writing
-            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
-
-            // wrap the FieldStream object in a using statement to ensure of the dispose
-            using (wfileStream)
-            {
-                // wrap the FileStream object in a StreamWriter object to simplify writing strings
-                StreamWriter sWriter = new StreamWriter(wfileStream);
-
-                // write each line to the data file
-                foreach (string skiRun in skiRunStringList)
-                {
-                    sWriter.WriteLine(skiRun);
-                }
-
-                // be sure to close the StreamWriter object
-                sWriter.Close();
-            }
-        }
+        
 
         /// <summary>
         /// method to read all ski run information from the data file and return it as a list of SkiRun objects
         /// </summary>
         /// <param name="dataFilePath">path the data file</param>
         /// <returns>list of SkiRun objects</returns>
-        public static List<SkiRun> ReadAllSkiRunsFromTextFile(string dataFilePath)
+        public static List<SkiRun> GetSkiRunsData(string dataFilePath)
         {
             const char delineator = ',';
 
@@ -85,11 +49,39 @@ namespace SkiRunRater
                 string[] properties = skiRun.Split(delineator);
 
                 // populate the ski run list with SkiRun objects
-                skiRunClassList.Add(new SkiRun() { Name = properties[0], Vertical = Convert.ToInt32(properties[1]) });
+                skiRunClassList.Add(new SkiRun() { ID = Convert.ToInt32(properties[0]), Name = properties[1], Vertical = Convert.ToInt32(properties[2]) });
             }
 
             return skiRunClassList;
         }
 
+        public static void InsertSkiRun(SkiRun skiRun)
+        {
+            string skiRunString;
+
+            skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
+
+            // initialize a FileStream object for writing
+            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
+
+            // wrap the FieldStream object in a using statement to ensure of the dispose
+            using (wfileStream)
+            {
+                // wrap the FileStream object in a StreamWriter object to simplify writing strings
+                StreamWriter sWriter = new StreamWriter(wfileStream);
+
+                sWriter.WriteLine(skiRunString);
+
+                // be sure to close the StreamWriter object
+                sWriter.Close();
+            }
+
+        }
+
+        public static void DeleteSkiRun(int ID)
+        {
+            List<SkiRun> skiRunData = new List<SkiRun>();
+            skiRunData = GetSkiRunsData();
+        }
     }
 }

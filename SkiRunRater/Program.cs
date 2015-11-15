@@ -37,7 +37,7 @@ namespace SkiRunRater
         //    Console.ReadKey();
 
         //    // build the list of strings and write to the text file line by line
-        //    CRUDSkiRun.WriteAllSkiRunsToTextFile(SkiRunClassListWrite, dataFile);
+        //    SkiRunRepository.WriteAllSkiRunsToTextFile(SkiRunClassListWrite, dataFile);
 
         //    Console.WriteLine("Ski runs added successfully.\n");
 
@@ -46,7 +46,7 @@ namespace SkiRunRater
 
 
         //    // build the list of SkiRun class objects from the list of strings
-        //    SkiRunClassListRead = CRUDSkiRun.ReadAllSkiRunsFromTextFile(dataFile);
+        //    SkiRunClassListRead = SkiRunRepository.ReadAllSkiRunsFromTextFile(dataFile);
 
         //    // display list of ski run objects
         //    DisplaySkiRuns(SkiRunClassListRead);
