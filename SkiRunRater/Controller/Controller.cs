@@ -66,6 +66,7 @@ namespace SkiRunRater
                             // TODO write a ConsoleView method to get the ski run ID
                             //
                             skiRunRepository.DeleteSkiRun(1);
+                            ConsoleView.DisplayReset();
                             ConsoleView.DisplayMessage("Ski Run ID: 1 had been deleted.");
                             ConsoleView.DisplayContinuePrompt();
                             break;
