@@ -60,21 +60,28 @@ namespace SkiRunRater
                 // display the menu
                 //
                 Console.WriteLine(
-                    leftTab + "1. Display All Ski Runs Information" + Environment.NewLine +
-                    leftTab + "2. Delete the Ski Run with ID = 1" + Environment.NewLine +
+                    leftTab + "1. Display A List of All Ski Runs" + Environment.NewLine +
+                    leftTab + "1. Display A List of All Ski Runs" + Environment.NewLine +
+                    leftTab + "9. Delete A Ski Run" + Environment.NewLine +
                     leftTab + "E. Exit" + Environment.NewLine);
 
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
                 switch (userResponse.KeyChar)
                 {
                     case '1':
-                        ConsoleView.DisplayAllSkiRuns();
+                        DisplayAllSkiRuns();
                         break;
-                    case '2':
+                    case '9':
+                        DisplayReset();
+                        Console.CursorVisible = true;
+
+                        DisplayPromptMessage("Enter the ID number of the ski run to delete.");
+                        int skiRunID = Int32.Parse(Console.ReadLine());
+
                         SkiRunRepository srr = new SkiRunRepository();
                         using (srr)
                         {
-                            srr.DeleteSkiRun(1);
+                            srr.DeleteSkiRun(skiRunID);
                         }
                         break;
                     case 'E' :
@@ -112,6 +119,9 @@ namespace SkiRunRater
             {
                 skiRuns = srr.GetSkiRuns();
             }
+
+            DisplayMessage("All of the existing ski runs are displayed below;");
+            DisplayMessage("");
 
             foreach (SkiRun skiRun in skiRuns)
             {
