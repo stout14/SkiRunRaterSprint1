@@ -47,7 +47,16 @@ namespace SkiRunRater
         {            
             ConsoleView.DisplayWelcomeScreen();
 
-            _skiRuns = SkiRunRepository.GetSkiRunsData(_dataFilePath);
+            _skiRuns = SkiRunRepository.ReadSkiRunsData(_dataFilePath);
+
+            ConsoleView.DisplaySkiRuns();
+
+            SkiRunRepository srr = new SkiRunRepository();
+
+            using (srr)
+            {
+                srr.DeleteSkiRun(1);
+            }
 
             ConsoleView.DisplaySkiRuns();
         }
