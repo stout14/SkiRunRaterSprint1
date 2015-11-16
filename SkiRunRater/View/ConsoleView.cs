@@ -10,11 +10,6 @@ namespace SkiRunRater
     {
         #region ENUMERABLES
 
-        private enum CRUDActions
-        {
-            None,
-            DisplayAllSkiRunInfo
-        }
 
         #endregion
 
@@ -44,7 +39,7 @@ namespace SkiRunRater
         /// <summary>
         /// provides a menu with options to display the information of the current objects in the game
         /// </summary>
-        public static void DisplayCURDMenu()
+        public static void DisplaySkiRunManagerMenu()
         {
             bool usingMenu = true;
 
@@ -65,7 +60,8 @@ namespace SkiRunRater
                 // display the menu
                 //
                 Console.WriteLine(
-                    leftTab + "1. Display All Ski Run Information" + Environment.NewLine +
+                    leftTab + "1. Display All Ski Runs Information" + Environment.NewLine +
+                    leftTab + "2. Delete the Ski Run with ID = 1" + Environment.NewLine +
                     leftTab + "E. Exit" + Environment.NewLine);
 
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
@@ -74,7 +70,15 @@ namespace SkiRunRater
                     case '1':
                         ConsoleView.DisplaySkiRuns();
                         break;
-                    case 'E':
+                    case '2':
+                        SkiRunRepository srr = new SkiRunRepository();
+                        using (srr)
+                        {
+                            srr.DeleteSkiRun(1);
+                        }
+                        break;
+                    case 'E' :
+                    case 'e' :
                         usingMenu = false;
                         break;
                     default:

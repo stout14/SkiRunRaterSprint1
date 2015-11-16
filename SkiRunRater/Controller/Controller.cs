@@ -13,7 +13,6 @@ namespace SkiRunRater
 
         #endregion
 
-
         #region FIELDS
 
 
@@ -36,19 +35,10 @@ namespace SkiRunRater
         #region METHODS
 
         private void ApplicationControl()
-        {            
+        {
             ConsoleView.DisplayWelcomeScreen();
 
-            ConsoleView.DisplaySkiRuns();
-
-            SkiRunRepository srr = new SkiRunRepository();
-
-            using (srr)
-            {
-                srr.DeleteSkiRun(1);
-            }
-
-            ConsoleView.DisplaySkiRuns();
+            ConsoleView.DisplaySkiRunManagerMenu();
         }
 
         #endregion

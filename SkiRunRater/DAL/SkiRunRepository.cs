@@ -59,7 +59,7 @@ namespace SkiRunRater
         /// <summary>
         /// method to write all of the list of ski runs to the text file
         /// </summary>
-        public void WriteSkiRunData()
+        public void WriteSkiRunsData()
         {
             string skiRunString;
 
@@ -114,7 +114,7 @@ namespace SkiRunRater
                 }
             }
 
-            WriteSkiRunData();
+            WriteSkiRunsData();
         }
 
         public void UpdateSkiRun(int ID)
