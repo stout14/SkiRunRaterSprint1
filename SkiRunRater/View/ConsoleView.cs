@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SkiRunRater;
 
 namespace SkiRunRater
 {
@@ -35,92 +36,93 @@ namespace SkiRunRater
 
         #region METHODS
 
-
         /// <summary>
-        /// provides a menu with options to display the information of the current objects in the game
+        /// method to display the manager menu and get the user's choice
         /// </summary>
-        public static void DisplaySkiRunManagerMenu()
+        /// <returns></returns>
+        public static AppEnum.ManagerAction GetUserActionChoice()
         {
-            bool usingMenu = true;
+            AppEnum.ManagerAction userActionChoice = AppEnum.ManagerAction.None;
+            //
+            // set a string variable with a length equal to the horizontal margin and filled with spaces
+            //
+            string leftTab = ConsoleUtil.FillStringWithSpaces(DISPLAY_HORIZONTAL_MARGIN);
 
-            while (usingMenu)
+            //
+            // set up display area
+            //
+            DisplayReset();
+
+            //
+            // display the menu
+            //
+            DisplayMessage("Ski Manager Menu");
+            DisplayMessage("");
+            Console.WriteLine(
+                leftTab + "1. Display All Ski Runs Information" + Environment.NewLine +
+                leftTab + "2. Delete the Ski Run with ID = 1" + Environment.NewLine +
+                leftTab + "E. Exit" + Environment.NewLine);
+
+            DisplayMessage("");
+            DisplayPromptMessage("Enter the number/letter for the menu choice.");
+            ConsoleKeyInfo userResponse = Console.ReadKey(true);
+
+            switch (userResponse.KeyChar)
             {
-                //
-                // set a string variable with a length equal to the horizontal margin and filled with spaces
-                //
-                string leftTab = ConsoleUtil.FillStringWithSpaces(DISPLAY_HORIZONTAL_MARGIN);
+                case '1':
+                    userActionChoice = AppEnum.ManagerAction.ListAllSkiRuns;
+                    break;
+                case '2':
+                    userActionChoice = AppEnum.ManagerAction.DeleteSkiRun;
+                    break;
+                case 'E':
+                case 'e':
+                    userActionChoice = AppEnum.ManagerAction.Quit;
+                    break;
+                default:
+                    Console.WriteLine(
+                        "It appears you have selected an incorrect choice." + Environment.NewLine +
+                        "Press any key to try again or the ESC key to exit.");
 
-                //
-                // set up display area
-                //
-                DisplayReset();
-                Console.CursorVisible = false;
-
-                //
-                // display the menu
-                //
-                Console.WriteLine(
-                    leftTab + "1. Display All Ski Runs Information" + Environment.NewLine +
-                    leftTab + "2. Delete the Ski Run with ID = 1" + Environment.NewLine +
-                    leftTab + "E. Exit" + Environment.NewLine);
-
-                ConsoleKeyInfo userResponse = Console.ReadKey(true);
-                switch (userResponse.KeyChar)
-                {
-                    case '1':
-                        ConsoleView.DisplayAllSkiRuns();
-                        break;
-                    case '2':
-                        SkiRunRepository srr = new SkiRunRepository();
-                        using (srr)
-                        {
-                            srr.DeleteSkiRun(1);
-                        }
-                        break;
-                    case 'E' :
-                    case 'e' :
-                        usingMenu = false;
-                        break;
-                    default:
-                        Console.WriteLine(
-                            "It appears you have selected an incorrect choice." + Environment.NewLine +
-                            "Press any key to continue or the ESC key to exit.");
-
-                        userResponse = Console.ReadKey(true);
-                        if (userResponse.Key == ConsoleKey.Escape)
-                        {
-                            usingMenu = false;
-                        }
-                        break;
-                }
+                    userResponse = Console.ReadKey(true);
+                    if (userResponse.Key == ConsoleKey.Escape)
+                    {
+                        userActionChoice = AppEnum.ManagerAction.Quit;
+                    }
+                    break;
             }
-            Console.CursorVisible = true;
+
+            return userActionChoice;
         }
 
         /// <summary>
         /// method to display all ski run info
         /// </summary>
-        public static void DisplayAllSkiRuns()
+        public static void DisplayAllSkiRuns(List<SkiRun> skiRuns)
         {
-            List<SkiRun> skiRuns = new List<SkiRun>();
-
             DisplayReset();
 
-            SkiRunRepository srr = new SkiRunRepository();
+            DisplayMessage("All of the existing ski runs are displayed below;");
+            DisplayMessage("");
 
-            using (srr)
-            {
-                skiRuns = srr.GetSkiRuns();
-            }
+            StringBuilder columnHeader = new StringBuilder();
+
+            columnHeader.Append("ID".PadRight(8));
+            columnHeader.Append("Ski Run".PadRight(25));
+            columnHeader.Append("Vertical in Feet".PadRight(5));
+
+            DisplayMessage(columnHeader.ToString());
 
             foreach (SkiRun skiRun in skiRuns)
             {
-                DisplayMessage("Ski Run: " + skiRun.Name);
-                DisplayMessage("Vertical: " + skiRun.Vertical);
-                Console.WriteLine(Environment.NewLine);
-            }
+                StringBuilder skiRunInfo = new StringBuilder();
 
-            DisplayContinuePrompt();
+                skiRunInfo.Append(skiRun.ID.ToString().PadRight(8));
+                skiRunInfo.Append(skiRun.Name.PadRight(25));
+                skiRunInfo.Append(skiRun.Vertical.ToString().PadRight(5));
+
+                DisplayMessage(skiRunInfo.ToString());
+            }
         }
 
         /// <summary>

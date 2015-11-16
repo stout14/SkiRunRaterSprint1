@@ -61,7 +61,7 @@ namespace SkiRunRater
                 //
                 Console.WriteLine(
                     leftTab + "1. Display A List of All Ski Runs" + Environment.NewLine +
-                    leftTab + "1. Display A List of All Ski Runs" + Environment.NewLine +
+                    leftTab + "2. Display A Ski Run Detail" + Environment.NewLine +
                     leftTab + "9. Delete A Ski Run" + Environment.NewLine +
                     leftTab + "E. Exit" + Environment.NewLine);
 
@@ -70,11 +70,15 @@ namespace SkiRunRater
                 {
                     case '1':
                         DisplayAllSkiRuns();
+                        DisplayContinuePrompt();
                         break;
                     case '9':
                         DisplayReset();
                         Console.CursorVisible = true;
 
+                        DisplayAllSkiRuns();
+
+                        DisplayMessage("");
                         DisplayPromptMessage("Enter the ID number of the ski run to delete.");
                         int skiRunID = Int32.Parse(Console.ReadLine());
 
@@ -84,8 +88,8 @@ namespace SkiRunRater
                             srr.DeleteSkiRun(skiRunID);
                         }
                         break;
-                    case 'E' :
-                    case 'e' :
+                    case 'E':
+                    case 'e':
                         usingMenu = false;
                         break;
                     default:
@@ -123,14 +127,36 @@ namespace SkiRunRater
             DisplayMessage("All of the existing ski runs are displayed below;");
             DisplayMessage("");
 
+            StringBuilder columnHeader = new StringBuilder();
+
+            columnHeader.Append("ID".PadRight(8));
+            columnHeader.Append("Ski Run".PadRight(25));
+            columnHeader.Append("Vertical in Feet".PadRight(5));
+
+            DisplayMessage(columnHeader.ToString());
+
             foreach (SkiRun skiRun in skiRuns)
             {
-                DisplayMessage("Ski Run: " + skiRun.Name);
-                DisplayMessage("Vertical: " + skiRun.Vertical);
-                Console.WriteLine(Environment.NewLine);
+                StringBuilder skiRunInfo = new StringBuilder();
+
+                skiRunInfo.Append(skiRun.ID.ToString().PadRight(8));
+                skiRunInfo.Append(skiRun.Name.PadRight(25));
+                skiRunInfo.Append(skiRun.Vertical.ToString().PadRight(5));
+
+                DisplayMessage(skiRunInfo.ToString());
+            }
+        }
+
+        public static void DisplaySkiRunDetail(int ID)
+        {
+            SkiRun skiRun;
+            SkiRunRepository srr = new SkiRunRepository();
+
+            using (srr)
+            {
+                skiRun = srr.GetSkiRun(ID);
             }
 
-            DisplayContinuePrompt();
         }
 
         /// <summary>

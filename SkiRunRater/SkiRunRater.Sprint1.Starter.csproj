@@ -45,6 +45,7 @@
     <Compile Include="Data\DataSettings.cs" />
     <Compile Include="Data\InitializeDataFile.cs" />
     <Compile Include="Models\SkiRun.cs" />
+    <Compile Include="Models\AppEnum.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\SkiRunRepository.cs" />
