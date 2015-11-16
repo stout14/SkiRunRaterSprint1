@@ -43,8 +43,7 @@ namespace SkiRunRater
                     skiRunStringList.Add(sReader.ReadLine());
                 }
             }
-
-
+            
             foreach (string skiRun in skiRunStringList)
             {
                 // use the Split method and the delineator on the array to separate each property into an array of properties
@@ -57,69 +56,9 @@ namespace SkiRunRater
             return skiRunClassList;
         }
 
-        //public static List<SkiRun> ReadSkiRunsData(string dataFilePath)
-        //{
-        //    const char delineator = ',';
-
-        //    // create lists to hold the ski run strings and objects
-        //    List<string> skiRunStringList = new List<string>();
-        //    List<SkiRun> skiRunClassList = new List<SkiRun>();
-
-        //    // initialize a FileStream object for reading
-        //    FileStream rFileStream = File.OpenRead(DataSettings.dataFilePath);
-
-        //    // wrap the FieldStream object in a using statement to ensure of the dispose
-        //    using (rFileStream)
-        //    {
-        //        // initialize a FileStream object for reading
-        //        StreamReader sReader = new StreamReader(rFileStream);
-
-        //        // keep reading lines of text until the end of the file is reached
-        //        while (!sReader.EndOfStream)
-        //        {
-        //            skiRunStringList.Add(sReader.ReadLine());
-        //        }
-        //    }
-
-        //    foreach (string skiRun in skiRunStringList)
-        //    {
-        //        // use the Split method and the delineator on the array to separate each property into an array of properties
-        //        string[] properties = skiRun.Split(delineator);
-
-        //        // populate the ski run list with SkiRun objects
-        //        skiRunClassList.Add(new SkiRun() { ID = Convert.ToInt32(properties[0]), Name = properties[1], Vertical = Convert.ToInt32(properties[2]) });
-        //    }
-
-        //    return skiRunClassList;
-        //}
-
-        //public void WriteSkiRunData()
-        //{
-        //    string skiRunString;
-
-        //    // initialize a FileStream object for writing
-        //    FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath, false);
-
-        //    // wrap the FieldStream object in a using statement to ensure of the dispose
-        //    using (wfileStream)
-        //    {
-        //        // wrap the FileStream object in a StreamWriter object to simplify writing strings
-        //        StreamWriter sWriter = new StreamWriter(wfileStream);
-
-        //        foreach (SkiRun skiRun in _skiRuns)
-        //        {
-        //            skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
-
-        //            sWriter.WriteLine(skiRunString);
-        //        }
-
-        //        // be sure to close the StreamWriter object
-
-        //       sWriter.Close();
-        //    }
-
-        //}
-
+        /// <summary>
+        /// method to write all of the list of ski runs to the text file
+        /// </summary>
         public void WriteSkiRunData()
         {
             string skiRunString;
@@ -138,6 +77,10 @@ namespace SkiRunRater
             }
         }
 
+        /// <summary>
+        /// method to add a new ski run
+        /// </summary>
+        /// <param name="skiRun"></param>
         public static void InsertSkiRun(SkiRun skiRun)
         {
             string skiRunString;
@@ -161,6 +104,10 @@ namespace SkiRunRater
 
         }
 
+        /// <summary>
+        /// method to delete a ski run by ski run ID
+        /// </summary>
+        /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
             for (int index = 0; index < _skiRuns.Count(); index++)
@@ -174,9 +121,29 @@ namespace SkiRunRater
             WriteSkiRunData();
         }
 
-        public void Dispose()
+        public void UpdateSkiRun(int ID)
         {
 
+        }
+
+
+        public SkiRun GetSkiRun(int ID)
+        {
+            SkiRun skiRun = null;
+
+            return skiRun;
+        }
+
+        public List<SkiRun> GetSkiRuns()
+        {
+            List<SkiRun> skiRuns = new List<SkiRun>();
+
+            return skiRuns;
+        }
+
+        public void Dispose()
+        {
+            _skiRuns = null;
         }
     }
 }
