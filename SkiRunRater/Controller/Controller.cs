@@ -11,24 +11,16 @@ namespace SkiRunRater
         #region ENUMERABLES
 
 
-
         #endregion
 
 
         #region FIELDS
 
-        private string _dataFilePath;
-        List<SkiRun> _skiRuns = new List<SkiRun>();
 
         #endregion
 
         #region PROPERTIES
 
-        public string DataFilePath
-        {
-            get { return _dataFilePath; }
-            set { _dataFilePath = value; }
-        }
 
         #endregion
 
@@ -46,8 +38,6 @@ namespace SkiRunRater
         private void ApplicationControl()
         {            
             ConsoleView.DisplayWelcomeScreen();
-
-            _skiRuns = SkiRunRepository.ReadSkiRunsData(_dataFilePath);
 
             ConsoleView.DisplaySkiRuns();
 

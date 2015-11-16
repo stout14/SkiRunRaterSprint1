@@ -93,13 +93,9 @@ namespace SkiRunRater
             // wrap the FieldStream object in a using statement to ensure of the dispose
             using (wfileStream)
             {
-                // wrap the FileStream object in a StreamWriter object to simplify writing strings
                 StreamWriter sWriter = new StreamWriter(wfileStream);
 
                 sWriter.WriteLine(skiRunString);
-
-                // be sure to close the StreamWriter object
-                sWriter.Close();
             }
 
         }
@@ -136,9 +132,7 @@ namespace SkiRunRater
 
         public List<SkiRun> GetSkiRuns()
         {
-            List<SkiRun> skiRuns = new List<SkiRun>();
-
-            return skiRuns;
+            return _skiRuns;
         }
 
         public void Dispose()

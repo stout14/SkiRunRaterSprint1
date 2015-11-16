@@ -98,11 +98,18 @@ namespace SkiRunRater
         /// </summary>
         public static void DisplaySkiRuns()
         {
+            List<SkiRun> skiRuns = new List<SkiRun>();
+
             DisplayReset();
 
-            List<SkiRun> SkiRunClassList = SkiRunRepository.ReadSkiRunsData(DataSettings.dataFilePath);
+            SkiRunRepository srr = new SkiRunRepository();
 
-            foreach (SkiRun skiRun in SkiRunClassList)
+            using (srr)
+            {
+                skiRuns = srr.GetSkiRuns();
+            }
+
+            foreach (SkiRun skiRun in skiRuns)
             {
                 DisplayMessage("Ski Run: " + skiRun.Name);
                 DisplayMessage("Vertical: " + skiRun.Vertical);
