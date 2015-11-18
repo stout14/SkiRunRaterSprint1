@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CB8C2BB8-AE15-46CE-93F3-B9EB285CD46A}</ProjectGuid>
+    <ProjectGuid>{2EF3E6BD-6FD1-4401-B573-5C00B79E4A7C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SkiRunRater.Sprint1.Solution</RootNamespace>
@@ -45,8 +45,12 @@
     <Compile Include="DAL\SkiRunRepository.cs" />
     <Compile Include="Data\DataSettings.cs" />
     <Compile Include="Data\InitializeDataFile.cs" />
+    <Compile Include="Models\AppEnum.cs" />
     <Compile Include="Models\SkiRun.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Program.cs">
+      <SubType>
+      </SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ConsoleUtil.cs" />
     <Compile Include="View\ConsoleView.cs" />
@@ -56,6 +60,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="archive.txt" />
     <Content Include="Data\Data.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

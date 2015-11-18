@@ -43,7 +43,7 @@ namespace SkiRunRater
 
             using (skiRunRepository)
             {
-                List<SkiRun> skiRuns = skiRunRepository.GetSkiRuns();
+                List<SkiRun> skiRuns = skiRunRepository.GetSkiAllRuns();
 
                 while (active)
                 {

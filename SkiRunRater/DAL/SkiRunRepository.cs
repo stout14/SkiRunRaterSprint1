@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -123,14 +124,14 @@ namespace SkiRunRater
         }
 
 
-        public SkiRun GetSkiRun(int ID)
+        public SkiRun GetSkiRunByID(int ID)
         {
             SkiRun skiRun = null;
 
             return skiRun;
         }
 
-        public List<SkiRun> GetSkiRuns()
+        public List<SkiRun> GetSkiAllRuns()
         {
             return _skiRuns;
         }
