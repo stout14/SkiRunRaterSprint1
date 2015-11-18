@@ -126,6 +126,37 @@ namespace SkiRunRater
         }
 
         /// <summary>
+        /// method to get the user's choice of ski run id
+        /// </summary>
+        public static int GetSkiRunID(List<SkiRun> skiRuns)
+        {
+            int id = -1;
+
+            DisplayAllSkiRuns(skiRuns);
+
+            DisplayPromptMessage("Enter the ID of the ski run you would like to view: ");
+            id = Int32.Parse(Console.ReadLine());
+
+            return id;
+        }
+
+        /// <summary>
+        /// method to display a ski run info
+        /// </summary>
+        public static void DisplaySkiRun(SkiRun skiRun)
+        {
+            DisplayReset();
+
+            DisplayMessage(String.Format("Ski Run: {0}", skiRun.Name));
+            DisplayMessage("");
+
+            DisplayMessage("ID".PadRight(20));
+            DisplayMessage("Vertical in Feet".PadRight(20));
+
+            DisplayMessage("");
+        }
+
+        /// <summary>
         /// reset display to default size and colors including the header
         /// </summary>
         public static void DisplayReset()
