@@ -45,6 +45,10 @@ namespace SkiRunRater
             {
                 List<SkiRun> skiRuns = skiRunRepository.GetSkiAllRuns();
 
+                int skiRunID;
+                SkiRun skiRun;
+                string message;
+
                 while (active)
                 {
                     AppEnum.ManagerAction userActionChoice;
@@ -55,29 +59,51 @@ namespace SkiRunRater
                     {
                         case AppEnum.ManagerAction.None:
                             break;
+
                         case AppEnum.ManagerAction.ListAllSkiRuns:
                             ConsoleView.DisplayAllSkiRuns(skiRuns);
+
                             ConsoleView.DisplayContinuePrompt();
                             break;
+
                         case AppEnum.ManagerAction.DisplaySkiRunDetail:
-                            ConsoleView.DisplaySkiRun(skiRunRepository.GetSkiRunByID(ConsoleView.GetSkiRunID(skiRuns)));
-                            break;
-                        case AppEnum.ManagerAction.DeleteSkiRun:
-                            //
-                            // TODO write a ConsoleView method to get the ski run ID
-                            //
-                            skiRunRepository.DeleteSkiRun(1);
-                            ConsoleView.DisplayReset();
-                            ConsoleView.DisplayMessage("Ski Run ID: 1 had been deleted.");
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                            skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
+
+                            ConsoleView.DisplaySkiRun(skiRun);
                             ConsoleView.DisplayContinuePrompt();
                             break;
+
                         case AppEnum.ManagerAction.AddSkiRun:
+                            skiRun = ConsoleView.AddSkiRun();
+                            skiRunRepository.InsertSkiRun(skiRun);
+
+                            ConsoleView.DisplayContinuePrompt();
                             break;
+
                         case AppEnum.ManagerAction.UpdateSkiRun:
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                            skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
+
+                            skiRun = ConsoleView.UpdateSkiRun(skiRun);
+
+                            skiRunRepository.UpdateSkiRun(skiRun);
                             break;
+
+                        case AppEnum.ManagerAction.DeleteSkiRun:
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                            skiRunRepository.DeleteSkiRun(skiRunID);
+
+                            ConsoleView.DisplayReset();
+                            message = String.Format("Ski Run ID: {0} had been deleted.", skiRunID);
+                            ConsoleView.DisplayMessage(message);
+                            ConsoleView.DisplayContinuePrompt();
+                            break;
+
                         case AppEnum.ManagerAction.Quit:
                             active = false;
                             break;
+
                         default:
                             break;
                     }

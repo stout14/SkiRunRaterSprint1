@@ -82,22 +82,12 @@ namespace SkiRunRater
         /// method to add a new ski run
         /// </summary>
         /// <param name="skiRun"></param>
-        public static void InsertSkiRun(SkiRun skiRun)
+        public void InsertSkiRun(SkiRun skiRun)
         {
             string skiRunString;
 
             skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
 
-            // initialize a FileStream object for writing
-            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
-
-            // wrap the FieldStream object in a using statement to ensure of the dispose
-            using (wfileStream)
-            {
-                StreamWriter sWriter = new StreamWriter(wfileStream);
-
-                sWriter.WriteLine(skiRunString);
-            }
 
         }
 

@@ -44,7 +44,7 @@ namespace SkiRunRater
                     skiRunStringList.Add(sReader.ReadLine());
                 }
             }
-            
+
             foreach (string skiRun in skiRunStringList)
             {
                 // use the Split method and the delineator on the array to separate each property into an array of properties
@@ -82,23 +82,11 @@ namespace SkiRunRater
         /// method to add a new ski run
         /// </summary>
         /// <param name="skiRun"></param>
-        public static void InsertSkiRun(SkiRun skiRun)
+        public void InsertSkiRun(SkiRun skiRun)
         {
-            string skiRunString;
+            _skiRuns.Add(skiRun);
 
-            skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
-
-            // initialize a FileStream object for writing
-            FileStream wfileStream = File.OpenWrite(DataSettings.dataFilePath);
-
-            // wrap the FieldStream object in a using statement to ensure of the dispose
-            using (wfileStream)
-            {
-                StreamWriter sWriter = new StreamWriter(wfileStream);
-
-                sWriter.WriteLine(skiRunString);
-            }
-
+            WriteSkiRunsData();
         }
 
         /// <summary>
@@ -107,20 +95,17 @@ namespace SkiRunRater
         /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    _skiRuns.RemoveAt(index);
-                }
-            }
+            _skiRuns.RemoveAt(GetSkiRunIndex(ID));
 
             WriteSkiRunsData();
         }
 
-        public void UpdateSkiRun(int ID)
+        public void UpdateSkiRun(SkiRun skiRun)
         {
+            DeleteSkiRun(skiRun.ID);
+            InsertSkiRun(skiRun);
 
+            WriteSkiRunsData();
         }
 
 
@@ -128,13 +113,7 @@ namespace SkiRunRater
         {
             SkiRun skiRun = null;
 
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    skiRun = _skiRuns[index];
-                }
-            }
+            skiRun = _skiRuns[GetSkiRunIndex(ID)];
 
             return skiRun;
         }
@@ -142,6 +121,26 @@ namespace SkiRunRater
         public List<SkiRun> GetSkiAllRuns()
         {
             return _skiRuns;
+        }
+
+        /// <summary>
+        /// method to return the index of a given ski run
+        /// </summary>
+        /// <param name="skiRun"></param>
+        /// <returns></returns>
+        private int GetSkiRunIndex(int ID)
+        {
+            int skiRunIndex = 0;
+
+            for (int index = 0; index < _skiRuns.Count(); index++)
+            {
+                if (_skiRuns[index].ID == ID)
+                {
+                    skiRunIndex = index;
+                }
+            }
+
+            return skiRunIndex;
         }
 
         public void Dispose()
