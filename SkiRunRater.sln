@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint1.Starter", "SkiRunRater\SkiRunRater.Sprint1.Starter.csproj", "{A26B1754-551D-4A40-ACDA-FDDB8CEF7EB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint1.Starter", "SkiRunRater.Sprint1.Starter\SkiRunRater.Sprint1.Starter.csproj", "{A26B1754-551D-4A40-ACDA-FDDB8CEF7EB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint1.Solution", "SkiRunRater.Sprint1.Solution\SkiRunRater.Sprint1.Solution.csproj", "{2EF3E6BD-6FD1-4401-B573-5C00B79E4A7C}"
 EndProject

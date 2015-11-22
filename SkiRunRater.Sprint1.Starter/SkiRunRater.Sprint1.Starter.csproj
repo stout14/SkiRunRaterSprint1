@@ -7,8 +7,8 @@
     <ProjectGuid>{A26B1754-551D-4A40-ACDA-FDDB8CEF7EB9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SkiRunRater</RootNamespace>
-    <AssemblyName>SkiRunRater</AssemblyName>
+    <RootNamespace>SkiRunRater.Sprint1.Starter</RootNamespace>
+    <AssemblyName>SkiRunRater.Sprint1.Starter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
