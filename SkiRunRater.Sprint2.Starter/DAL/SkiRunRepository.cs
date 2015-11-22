@@ -33,7 +33,7 @@ namespace SkiRunRater
             List<string> skiRunStringList = new List<string>();
             List<SkiRun> skiRunClassList = new List<SkiRun>();
 
-            // initialize a StreamRader object for reading
+            // initialize a StreamReader object for reading
             StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
 
             using (sReader)
@@ -64,7 +64,7 @@ namespace SkiRunRater
         {
             string skiRunString;
 
-            // create a StreamWriter object to access the data file
+            // wrap the FileStream object in a StreamWriter object to simplify writing strings
             StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
 
             using (sWriter)

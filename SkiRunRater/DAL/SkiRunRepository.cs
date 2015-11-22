@@ -33,7 +33,7 @@ namespace SkiRunRater
             List<string> skiRunStringList = new List<string>();
             List<SkiRun> skiRunClassList = new List<SkiRun>();
 
-            // initialize a FileStream object for reading
+            // initialize a StreamReader object for reading
             StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
 
             using (sReader)

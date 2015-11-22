@@ -5,17 +5,18 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SkiRunRater
 {
     /// <summary>
     /// method to write all ski run information to the date file
     /// </summary>
-    public class SkiRunRepository : IDisposable
+    public class SkiRunRepositoryXML : IDisposable
     {
         private List<SkiRun> _skiRuns;
 
-        public SkiRunRepository()
+        public SkiRunRepositoryXML()
         {
             _skiRuns = ReadSkiRunsData(DataSettings.dataFilePath);
         }
@@ -25,36 +26,24 @@ namespace SkiRunRater
         /// </summary>
         /// <param name="dataFilePath">path the data file</param>
         /// <returns>list of SkiRun objects</returns>
-        public static List<SkiRun> ReadSkiRunsData(string dataFilePath)
+        public List<SkiRun> ReadSkiRunsData(string dataFilePath)
         {
-            const char delineator = ',';
+            SkiRuns skiRuns = new SkiRuns();
+            //SkiRun skiRun;
 
-            // create lists to hold the ski run strings and objects
-            List<string> skiRunStringList = new List<string>();
-            List<SkiRun> skiRunClassList = new List<SkiRun>();
+            // initialize a FileStream object for reading
+            StreamReader tReader = new StreamReader(DataSettings.dataFilePath);
 
-            // initialize a StreamRader object for reading
-            StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
+            // initialize an XML seriailizer object
+            XmlSerializer deserializer = new XmlSerializer(typeof(SkiRuns));
 
-            using (sReader)
+            using (tReader)
             {
-                // keep reading lines of text until the end of the file is reached
-                while (!sReader.EndOfStream)
-                {
-                    skiRunStringList.Add(sReader.ReadLine());
-                }
+                object xmlObject = deserializer.Deserialize(tReader);
+                skiRuns = (SkiRuns)xmlObject;
             }
 
-            foreach (string skiRun in skiRunStringList)
-            {
-                // use the Split method and the delineator on the array to separate each property into an array of properties
-                string[] properties = skiRun.Split(delineator);
-
-                // populate the ski run list with SkiRun objects
-                skiRunClassList.Add(new SkiRun() { ID = Convert.ToInt32(properties[0]), Name = properties[1], Vertical = Convert.ToInt32(properties[2]) });
-            }
-
-            return skiRunClassList;
+            return skiRuns.skiRuns;
         }
 
         /// <summary>
@@ -64,7 +53,7 @@ namespace SkiRunRater
         {
             string skiRunString;
 
-            // create a StreamWriter object to access the data file
+            // wrap the FileStream object in a StreamWriter object to simplify writing strings
             StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
 
             using (sWriter)

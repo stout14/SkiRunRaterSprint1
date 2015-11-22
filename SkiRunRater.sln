@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint1.Starter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint1.Solution", "SkiRunRater.Sprint1.Solution\SkiRunRater.Sprint1.Solution.csproj", "{2EF3E6BD-6FD1-4401-B573-5C00B79E4A7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint2.Starter", "SkiRunRater.Sprint2.Starter\SkiRunRater.Sprint2.Starter.csproj", "{3A0B5BF1-B3B2-44D7-B699-48BE4D9D3D2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint2.Solution", "SkiRunRater.Sprint2.Solution\SkiRunRater.Sprint2.Solution.csproj", "{F80AA9A5-D15F-4062-8355-E0954A4BB94D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{2EF3E6BD-6FD1-4401-B573-5C00B79E4A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EF3E6BD-6FD1-4401-B573-5C00B79E4A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EF3E6BD-6FD1-4401-B573-5C00B79E4A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A0B5BF1-B3B2-44D7-B699-48BE4D9D3D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0B5BF1-B3B2-44D7-B699-48BE4D9D3D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0B5BF1-B3B2-44D7-B699-48BE4D9D3D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0B5BF1-B3B2-44D7-B699-48BE4D9D3D2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F80AA9A5-D15F-4062-8355-E0954A4BB94D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F80AA9A5-D15F-4062-8355-E0954A4BB94D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F80AA9A5-D15F-4062-8355-E0954A4BB94D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F80AA9A5-D15F-4062-8355-E0954A4BB94D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
