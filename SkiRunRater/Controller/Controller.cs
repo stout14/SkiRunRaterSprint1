@@ -74,6 +74,8 @@ namespace SkiRunRater
                             break;
                         case AppEnum.ManagerAction.UpdateSkiRun:
                             break;
+                        case AppEnum.ManagerAction.QuerySkiRunsByVertical:
+                            break;
                         case AppEnum.ManagerAction.Quit:
                             active = false;
                             break;

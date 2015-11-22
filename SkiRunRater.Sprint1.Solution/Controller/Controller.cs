@@ -100,6 +100,19 @@ namespace SkiRunRater
                             ConsoleView.DisplayContinuePrompt();
                             break;
 
+                        case AppEnum.ManagerAction.QuerySkiRunsByVertical:
+                            List<SkiRun> matchingSkiRuns = new List<SkiRun>();
+
+                            int minimumVertical;
+                            int maximumVertical;
+                            ConsoleView.GetVerticalQueryMinMaxValues(out minimumVertical, out maximumVertical);
+
+                            matchingSkiRuns = skiRunRepository.QueryByVertical(minimumVertical, maximumVertical);
+
+                            ConsoleView.DisplayQueryResults(matchingSkiRuns);
+                            ConsoleView.DisplayContinuePrompt();
+                            break;
+
                         case AppEnum.ManagerAction.Quit:
                             active = false;
                             break;

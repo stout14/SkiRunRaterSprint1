@@ -66,6 +66,7 @@ namespace SkiRunRater
                 leftTab + "3. Add a Ski Run" + Environment.NewLine +
                 leftTab + "4. Delete a Ski Run" + Environment.NewLine +
                 leftTab + "5. Edit a Ski Run" + Environment.NewLine +
+                leftTab + "6. Query Ski Runs by Vertical" + Environment.NewLine +
                 leftTab + "E. Exit" + Environment.NewLine);
 
             DisplayMessage("");
@@ -88,6 +89,9 @@ namespace SkiRunRater
                     break;
                 case '5':
                     userActionChoice = AppEnum.ManagerAction.UpdateSkiRun;
+                    break;
+                case '6':
+                    userActionChoice = AppEnum.ManagerAction.QuerySkiRunsByVertical;
                     break;
                 case 'E':
                 case 'e':
@@ -238,6 +242,77 @@ namespace SkiRunRater
             DisplayContinuePrompt();
 
             return skiRun;
+        }
+
+        /// <summary>
+        /// method gets the minimum and maximum values for the vertical query
+        /// </summary>
+        /// <param name="minimumVertical">minimum vertical</param>
+        /// <param name="maximumVertical">maximum vertical</param>
+        public static void GetVerticalQueryMinMaxValues(out int minimumVertical, out int maximumVertical)
+        {
+            minimumVertical = 0;
+            maximumVertical = 0;
+            string userResponse = "";
+
+            DisplayReset();
+
+            DisplayMessage("");
+            Console.WriteLine(ConsoleUtil.Center("Query Ski Runs by Vertical", WINDOW_WIDTH));
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the minimum vertical: ");
+            userResponse = Console.ReadLine();
+            if (userResponse != "")
+            {
+                minimumVertical = ConsoleUtil.ValidateIntegerResponse("Please enter the minimum vertical in feet.", userResponse);
+            }
+
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the maximum vertical: ");
+            userResponse = Console.ReadLine();
+            if (userResponse != "")
+            {
+                maximumVertical = ConsoleUtil.ValidateIntegerResponse("Please enter the maximum vertical in feet.", userResponse);
+            }
+
+            DisplayMessage("");
+
+            DisplayMessage(String.Format("You have entered {0} feet as the minimum value and {1} as the maximum value.", minimumVertical, maximumVertical));
+
+            DisplayMessage("");
+
+            DisplayContinuePrompt();
+        }
+
+        public static void DisplayQueryResults(List<SkiRun> matchingSkiRuns)
+        {
+            DisplayReset();
+
+            DisplayMessage("");
+            Console.WriteLine(ConsoleUtil.Center("Display Ski Run Query Results", WINDOW_WIDTH));
+            DisplayMessage("");
+
+            DisplayMessage("All of the matching ski runs are displayed below;");
+            DisplayMessage("");
+
+            StringBuilder columnHeader = new StringBuilder();
+
+            columnHeader.Append("ID".PadRight(8));
+            columnHeader.Append("Ski Run".PadRight(25));
+
+            DisplayMessage(columnHeader.ToString());
+
+            foreach (SkiRun skiRun in matchingSkiRuns)
+            {
+                StringBuilder skiRunInfo = new StringBuilder();
+
+                skiRunInfo.Append(skiRun.ID.ToString().PadRight(8));
+                skiRunInfo.Append(skiRun.Name.PadRight(25));
+
+                DisplayMessage(skiRunInfo.ToString());
+            }
         }
 
         /// <summary>

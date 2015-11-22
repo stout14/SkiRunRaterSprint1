@@ -139,6 +139,19 @@ namespace SkiRunRater
         }
 
         /// <summary>
+        /// method to query the data by the vertical of each ski run in feet
+        /// </summary>
+        /// <param name="minimumVertical">int minimum vertical</param>
+        /// <param name="maximumVertical">int maximum vertical</param>
+        /// <returns></returns>
+        public List<SkiRun> QueryByVertical(int minimumVertical, int maximumVertical)
+        {
+            List<SkiRun> matchingSkiRuns = new List<SkiRun>();
+
+            return matchingSkiRuns;
+        }
+
+        /// <summary>
         /// method to handle the IDisposable interface contract
         /// </summary>
         public void Dispose()

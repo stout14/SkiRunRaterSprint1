@@ -16,6 +16,7 @@ namespace SkiRunRater
             DeleteSkiRun,
             AddSkiRun,
             UpdateSkiRun,
+            QuerySkiRunsByVertical,
             Quit
         }
     }

@@ -155,6 +155,27 @@ namespace SkiRunRater
             return skiRunIndex;
         }
 
+                /// <summary>
+        /// method to query the data by the vertical of each ski run in feet
+        /// </summary>
+        /// <param name="minimumVertical">int minimum vertical</param>
+        /// <param name="maximumVertical">int maximum vertical</param>
+        /// <returns></returns>
+        public List<SkiRun> QueryByVertical(int minimumVertical, int maximumVertical)
+        {
+            List<SkiRun> matchingSkiRuns = new List<SkiRun>();
+
+            foreach (var skiRun in _skiRuns)
+            {
+                if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
+                {
+                    matchingSkiRuns.Add(skiRun);
+                }
+            }
+
+            return matchingSkiRuns;
+        }
+
         /// <summary>
         /// method to handle the IDisposable interface contract
         /// </summary>
