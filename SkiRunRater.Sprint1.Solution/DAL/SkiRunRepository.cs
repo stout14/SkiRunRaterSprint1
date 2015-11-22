@@ -100,6 +100,10 @@ namespace SkiRunRater
             WriteSkiRunsData();
         }
 
+        /// <summary>
+        /// method to update an existing ski run
+        /// </summary>
+        /// <param name="skiRun">ski run object</param>
         public void UpdateSkiRun(SkiRun skiRun)
         {
             DeleteSkiRun(skiRun.ID);
@@ -108,7 +112,11 @@ namespace SkiRunRater
             WriteSkiRunsData();
         }
 
-
+        /// <summary>
+        /// method to return a ski run object given the ID
+        /// </summary>
+        /// <param name="ID">int ID</param>
+        /// <returns>ski run object</returns>
         public SkiRun GetSkiRunByID(int ID)
         {
             SkiRun skiRun = null;
@@ -118,6 +126,10 @@ namespace SkiRunRater
             return skiRun;
         }
 
+        /// <summary>
+        /// method to return a list of ski run objects
+        /// </summary>
+        /// <returns>list of ski run objects</returns>
         public List<SkiRun> GetSkiAllRuns()
         {
             return _skiRuns;
@@ -127,7 +139,7 @@ namespace SkiRunRater
         /// method to return the index of a given ski run
         /// </summary>
         /// <param name="skiRun"></param>
-        /// <returns></returns>
+        /// <returns>int ID</returns>
         private int GetSkiRunIndex(int ID)
         {
             int skiRunIndex = 0;
@@ -143,6 +155,9 @@ namespace SkiRunRater
             return skiRunIndex;
         }
 
+        /// <summary>
+        /// method to handle the IDisposable interface contract
+        /// </summary>
         public void Dispose()
         {
             _skiRuns = null;
