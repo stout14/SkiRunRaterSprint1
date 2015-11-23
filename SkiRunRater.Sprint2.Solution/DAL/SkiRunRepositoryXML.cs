@@ -28,22 +28,22 @@ namespace SkiRunRater
         /// <returns>list of SkiRun objects</returns>
         public List<SkiRun> ReadSkiRunsData(string dataFilePath)
         {
-            SkiRuns skiRuns = new SkiRuns();
+            SkiRuns skiRunsFromFile = new SkiRuns();
             //SkiRun skiRun;
 
             // initialize a FileStream object for reading
-            StreamReader tReader = new StreamReader(DataSettings.dataFilePath);
+            StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
 
             // initialize an XML seriailizer object
             XmlSerializer deserializer = new XmlSerializer(typeof(SkiRuns));
 
-            using (tReader)
+            using (sReader)
             {
-                object xmlObject = deserializer.Deserialize(tReader);
-                skiRuns = (SkiRuns)xmlObject;
+                object xmlObject = deserializer.Deserialize(sReader);
+                skiRunsFromFile = (SkiRuns)xmlObject;
             }
 
-            return skiRuns.skiRuns;
+            return skiRunsFromFile.skiRuns;
         }
 
         /// <summary>
@@ -51,19 +51,14 @@ namespace SkiRunRater
         /// </summary>
         public void WriteSkiRunsData()
         {
-            string skiRunString;
-
-            // wrap the FileStream object in a StreamWriter object to simplify writing strings
+            // initialize a FileStream object for reading
             StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
 
             using (sWriter)
             {
-                foreach (SkiRun skiRun in _skiRuns)
-                {
-                    skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
-
-                    sWriter.WriteLine(skiRunString);
-                }
+                serializer.Serialize(sWriter, _skiRuns);
             }
         }
 
@@ -144,7 +139,7 @@ namespace SkiRunRater
             return skiRunIndex;
         }
 
-                /// <summary>
+        /// <summary>
         /// method to query the data by the vertical of each ski run in feet
         /// </summary>
         /// <param name="minimumVertical">int minimum vertical</param>
