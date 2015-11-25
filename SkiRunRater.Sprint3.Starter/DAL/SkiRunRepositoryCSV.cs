@@ -5,18 +5,17 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace SkiRunRater
 {
     /// <summary>
     /// method to write all ski run information to the date file
     /// </summary>
-    public class SkiRunRepositoryXML : IDisposable
+    public class SkiRunRepositoryCSV : IDisposable
     {
         private List<SkiRun> _skiRuns;
 
-        public SkiRunRepositoryXML()
+        public SkiRunRepositoryCSV()
         {
             _skiRuns = ReadSkiRunsData(DataSettings.dataFilePath);
         }
@@ -26,23 +25,36 @@ namespace SkiRunRater
         /// </summary>
         /// <param name="dataFilePath">path the data file</param>
         /// <returns>list of SkiRun objects</returns>
-        public List<SkiRun> ReadSkiRunsData(string dataFilePath)
+        public static List<SkiRun> ReadSkiRunsData(string dataFilePath)
         {
-            SkiRuns skiRunsFromFile = new SkiRuns();
+            const char delineator = ',';
 
-            // initialize a FileStream object for reading
+            // create lists to hold the ski run strings and objects
+            List<string> skiRunStringList = new List<string>();
+            List<SkiRun> skiRunClassList = new List<SkiRun>();
+
+            // initialize a StreamReader object for reading
             StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
-
-            // initialize an XML seriailizer object
-            XmlSerializer deserializer = new XmlSerializer(typeof(SkiRuns));
 
             using (sReader)
             {
-                object xmlObject = deserializer.Deserialize(sReader);
-                skiRunsFromFile = (SkiRuns)xmlObject;
+                // keep reading lines of text until the end of the file is reached
+                while (!sReader.EndOfStream)
+                {
+                    skiRunStringList.Add(sReader.ReadLine());
+                }
             }
 
-            return skiRunsFromFile.skiRuns;
+            foreach (string skiRun in skiRunStringList)
+            {
+                // use the Split method and the delineator on the array to separate each property into an array of properties
+                string[] properties = skiRun.Split(delineator);
+
+                // populate the ski run list with SkiRun objects
+                skiRunClassList.Add(new SkiRun() { ID = Convert.ToInt32(properties[0]), Name = properties[1], Vertical = Convert.ToInt32(properties[2]) });
+            }
+
+            return skiRunClassList;
         }
 
         /// <summary>
@@ -50,14 +62,19 @@ namespace SkiRunRater
         /// </summary>
         public void WriteSkiRunsData()
         {
-            // initialize a FileStream object for reading
-            StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
+            string skiRunString;
 
-            XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
+            // create a StreamWriter object to access the data file
+            StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
 
             using (sWriter)
             {
-                serializer.Serialize(sWriter, _skiRuns);
+                foreach (SkiRun skiRun in _skiRuns)
+                {
+                    skiRunString = skiRun.ID + "," + skiRun.Name + "," + skiRun.Vertical;
+
+                    sWriter.WriteLine(skiRunString);
+                }
             }
         }
 
@@ -138,7 +155,7 @@ namespace SkiRunRater
             return skiRunIndex;
         }
 
-        /// <summary>
+                /// <summary>
         /// method to query the data by the vertical of each ski run in feet
         /// </summary>
         /// <param name="minimumVertical">int minimum vertical</param>

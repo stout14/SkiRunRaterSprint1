@@ -5,6 +5,7 @@ using System.Linq;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SkiRunRater
@@ -12,37 +13,34 @@ namespace SkiRunRater
     /// <summary>
     /// method to write all ski run information to the date file
     /// </summary>
-    public class SkiRunRepositoryXML : IDisposable
+    public class SkiRunRepositoryXML_DS : IDisposable
     {
-        private List<SkiRun> _skiRuns;
+        DataSet _skiRuns_ds = new DataSet();
+        DataTable _skiRuns_dt = new DataTable();
 
-        public SkiRunRepositoryXML()
+        public SkiRunRepositoryXML_DS()
         {
-            _skiRuns = ReadSkiRunsData(DataSettings.dataFilePath);
+            _skiRuns_ds = ReadSkiRunsData(DataSettings.dataFilePath);
+            _skiRuns_ds.DataSetName = "SkiRuns";
+            _skiRuns_dt = _skiRuns_ds.Tables[0];
         }
 
         /// <summary>
-        /// method to read all ski run information from the data file and return it as a list of SkiRun objects
+        /// method to read all ski run information from the XML data file and return it as a list of SkiRun objects
         /// </summary>
         /// <param name="dataFilePath">path the data file</param>
         /// <returns>list of SkiRun objects</returns>
-        public List<SkiRun> ReadSkiRunsData(string dataFilePath)
+        public DataSet ReadSkiRunsData(string dataFilePath)
         {
-            SkiRuns skiRunsFromFile = new SkiRuns();
+            //SkiRuns skiRunsFromFile = new SkiRuns();
 
-            // initialize a FileStream object for reading
-            StreamReader sReader = new StreamReader(DataSettings.dataFilePath);
+            XmlReader xmlFile;
+            xmlFile = XmlReader.Create(DataSettings.dataFilePath);
 
-            // initialize an XML seriailizer object
-            XmlSerializer deserializer = new XmlSerializer(typeof(SkiRuns));
+            DataSet ds = new DataSet();
+            ds.ReadXml(xmlFile);
 
-            using (sReader)
-            {
-                object xmlObject = deserializer.Deserialize(sReader);
-                skiRunsFromFile = (SkiRuns)xmlObject;
-            }
-
-            return skiRunsFromFile.skiRuns;
+            return ds;
         }
 
         /// <summary>
@@ -50,15 +48,8 @@ namespace SkiRunRater
         /// </summary>
         public void WriteSkiRunsData()
         {
-            // initialize a FileStream object for reading
-            StreamWriter sWriter = new StreamWriter(DataSettings.dataFilePath, false);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<SkiRun>), new XmlRootAttribute("SkiRuns"));
-
-            using (sWriter)
-            {
-                serializer.Serialize(sWriter, _skiRuns);
-            }
+            // name the DataSet and write it to the XML file
+            _skiRuns_ds.WriteXml(DataSettings.dataFilePath);
         }
 
         /// <summary>
@@ -67,7 +58,9 @@ namespace SkiRunRater
         /// <param name="skiRun"></param>
         public void InsertSkiRun(SkiRun skiRun)
         {
-            _skiRuns.Add(skiRun);
+            List<SkiRun> skiRuns = new List<SkiRun>();
+
+            skiRuns.Add(skiRun);
 
             WriteSkiRunsData();
         }
@@ -78,7 +71,9 @@ namespace SkiRunRater
         /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
-            _skiRuns.RemoveAt(GetSkiRunIndex(ID));
+            List<SkiRun> skiRuns = new List<SkiRun>();
+
+            skiRuns.RemoveAt(GetSkiRunIndex(ID));
 
             WriteSkiRunsData();
         }
@@ -104,7 +99,7 @@ namespace SkiRunRater
         {
             SkiRun skiRun = null;
 
-            skiRun = _skiRuns[GetSkiRunIndex(ID)];
+            //skiRun = _skiRuns[GetSkiRunIndex(ID)];
 
             return skiRun;
         }
@@ -115,7 +110,18 @@ namespace SkiRunRater
         /// <returns>list of ski run objects</returns>
         public List<SkiRun> GetSkiAllRuns()
         {
-            return _skiRuns;
+            List<SkiRun> skiRuns = new List<SkiRun>();
+
+            foreach (DataRow skiRun in _skiRuns_dt.Rows)
+            {
+                skiRuns.Add(new SkiRun {
+                    ID = int.Parse(skiRun["ID"].ToString()),
+                    Name = skiRun["Name"].ToString(),
+                    Vertical = int.Parse(skiRun["Vertical"].ToString()),
+                });
+            }
+
+            return skiRuns;
         }
 
         /// <summary>
@@ -127,13 +133,13 @@ namespace SkiRunRater
         {
             int skiRunIndex = 0;
 
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    skiRunIndex = index;
-                }
-            }
+            //for (int index = 0; index < _skiRuns.Count(); index++)
+            //{
+            //    if (_skiRuns[index].ID == ID)
+            //    {
+            //        skiRunIndex = index;
+            //    }
+            //}
 
             return skiRunIndex;
         }
@@ -148,15 +154,34 @@ namespace SkiRunRater
         {
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
 
-            foreach (var skiRun in _skiRuns)
-            {
-                if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
-                {
-                    matchingSkiRuns.Add(skiRun);
-                }
-            }
+            //foreach (var skiRun in _skiRuns)
+            //{
+            //    if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
+            //    {
+            //        matchingSkiRuns.Add(skiRun);
+            //    }
+            //}
 
             return matchingSkiRuns;
+        }
+
+        /// <summary>
+        /// add a row of data to the DataTable
+        /// </summary>
+        /// <param name="dt">DataTable</param>
+        /// <param name="ID">ski run ID</param>
+        /// <param name="name">ski run Name</param>
+        /// <param name="vertical">ski run vertical</param>
+        private static void fillRow(DataTable dt, int ID, string name, int vertical)
+        {
+            DataRow dr;
+            dr = dt.NewRow();
+
+            dr["ID"] = ID;
+            dr["Name"] = name;
+            dr["Vertical"] = vertical;
+
+            dt.Rows.Add(dr);
         }
 
         /// <summary>
@@ -164,7 +189,7 @@ namespace SkiRunRater
         /// </summary>
         public void Dispose()
         {
-            _skiRuns = null;
+            _skiRuns_ds.Dispose();
         }
     }
 }
