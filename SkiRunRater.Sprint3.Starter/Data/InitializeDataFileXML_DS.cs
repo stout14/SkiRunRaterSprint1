@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SkiRunRater
@@ -33,9 +34,18 @@ namespace SkiRunRater
             ds.Tables.Add(dt);
             ds.Tables[0].TableName = "SkiRun";
 
-            // name the DataSet and write it to the XML file
+            // name the DataSet
             ds.DataSetName = "SkiRuns";
-            ds.WriteXml(DataSettings.dataFilePath);
+
+            // create a XmlWriterSettings object to set the writing method
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+
+            // create an XMLWriter, write the datatable to the file using it, and close
+            XmlWriter xmlWriter = XmlWriter.Create(DataSettings.dataFilePath, settings);
+            ds.WriteXml(xmlWriter);
+            xmlWriter.Close();
         }
 
         /// <summary>

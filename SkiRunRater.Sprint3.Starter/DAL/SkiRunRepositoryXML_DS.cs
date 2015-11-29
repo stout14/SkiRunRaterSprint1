@@ -20,7 +20,7 @@ namespace SkiRunRater
 
         public SkiRunRepositoryXML_DS()
         {
-            _skiRuns_ds = ReadSkiRunsData(DataSettings.dataFilePath);
+            ReadSkiRunsData();
             _skiRuns_ds.DataSetName = "SkiRuns";
             _skiRuns_dt = _skiRuns_ds.Tables[0];
         }
@@ -30,91 +30,53 @@ namespace SkiRunRater
         /// </summary>
         /// <param name="dataFilePath">path the data file</param>
         /// <returns>list of SkiRun objects</returns>
-        public DataSet ReadSkiRunsData(string dataFilePath)
+        public void ReadSkiRunsData()
         {
-            //SkiRuns skiRunsFromFile = new SkiRuns();
-
-            XmlReader xmlFile;
-            xmlFile = XmlReader.Create(DataSettings.dataFilePath);
-
+            // create a dataset to hold the data from the reader
             DataSet ds = new DataSet();
-            ds.ReadXml(xmlFile);
 
-            return ds;
+            // create an XmlReader object
+            XmlReader xmlReader = XmlReader.Create(DataSettings.dataFilePath);
+
+            // read data file into DataSet
+            _skiRuns_ds.ReadXml(xmlReader);
+
+            // close XmlReader
+            xmlReader.Close();
         }
 
         /// <summary>
-        /// method to write all of the list of ski runs to the text file
+        /// write the dataset to the xml file
         /// </summary>
         public void WriteSkiRunsData()
         {
-            // name the DataSet and write it to the XML file
-            _skiRuns_ds.WriteXml(DataSettings.dataFilePath);
-        }
+            // create a XmlWriterSettings object to set the writing method
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
 
-        /// <summary>
-        /// method to add a new ski run
-        /// </summary>
-        /// <param name="skiRun"></param>
-        public void InsertSkiRun(SkiRun skiRun)
-        {
-            List<SkiRun> skiRuns = new List<SkiRun>();
+            // create XmlWrtier object
+            XmlWriter xmlWriter = XmlWriter.Create(DataSettings.dataFilePath, settings);
 
-            skiRuns.Add(skiRun);
+            // write DataSet to data file
+            _skiRuns_ds.WriteXml(xmlWriter);
 
-            WriteSkiRunsData();
-        }
-
-        /// <summary>
-        /// method to delete a ski run by ski run ID
-        /// </summary>
-        /// <param name="ID"></param>
-        public void DeleteSkiRun(int ID)
-        {
-            List<SkiRun> skiRuns = new List<SkiRun>();
-
-            skiRuns.RemoveAt(GetSkiRunIndex(ID));
-
-            WriteSkiRunsData();
-        }
-
-        /// <summary>
-        /// method to update an existing ski run
-        /// </summary>
-        /// <param name="skiRun">ski run object</param>
-        public void UpdateSkiRun(SkiRun skiRun)
-        {
-            DeleteSkiRun(skiRun.ID);
-            InsertSkiRun(skiRun);
-
-            WriteSkiRunsData();
-        }
-
-        /// <summary>
-        /// method to return a ski run object given the ID
-        /// </summary>
-        /// <param name="ID">int ID</param>
-        /// <returns>ski run object</returns>
-        public SkiRun GetSkiRunByID(int ID)
-        {
-            SkiRun skiRun = null;
-
-            //skiRun = _skiRuns[GetSkiRunIndex(ID)];
-
-            return skiRun;
+            // close DataWrtier
+            xmlWriter.Close();
         }
 
         /// <summary>
         /// method to return a list of ski run objects
         /// </summary>
         /// <returns>list of ski run objects</returns>
-        public List<SkiRun> GetSkiAllRuns()
+        public List<SkiRun> SelectAllRuns()
         {
             List<SkiRun> skiRuns = new List<SkiRun>();
 
             foreach (DataRow skiRun in _skiRuns_dt.Rows)
             {
-                skiRuns.Add(new SkiRun {
+                skiRuns.Add(new SkiRun
+                {
                     ID = int.Parse(skiRun["ID"].ToString()),
                     Name = skiRun["Name"].ToString(),
                     Vertical = int.Parse(skiRun["Vertical"].ToString()),
@@ -125,23 +87,105 @@ namespace SkiRunRater
         }
 
         /// <summary>
-        /// method to return the index of a given ski run
+        /// method to return a ski run object given the ID
+        /// </summary>
+        /// <param name="ID">int ID</param>
+        /// <returns>ski run object</returns>
+        public SkiRun SelectByID(int ID)
+        {
+            SkiRun skiRun = new SkiRun();
+            DataRow[] skiRuns;
+
+            // get an array of ski runs with the matching ID
+            skiRuns = _skiRuns_dt.Select("ID = " + ID.ToString());
+
+            // no ski runs with the matching ID
+            if (skiRuns.Count() < 1)
+            {
+                throw new Exception("Ski run now found.");
+            }
+            // multiple ski runs with the matching ID
+            else if (skiRuns.Count() > 1)
+            {
+                throw new Exception("More than one ski run with the id: " + ID);
+            }
+            // a unique ski run with the matching ID
+            else
+            {
+                skiRun.ID = int.Parse(skiRuns[0]["ID"].ToString());
+                skiRun.Name = skiRuns[0]["Name"].ToString();
+                skiRun.Vertical = int.Parse(skiRuns[0]["Vertical"].ToString());
+            }
+
+            return skiRun;
+        }
+
+        /// <summary>
+        /// method to add a new ski run
         /// </summary>
         /// <param name="skiRun"></param>
-        /// <returns>int ID</returns>
-        private int GetSkiRunIndex(int ID)
+        public void InsertSkiRun(SkiRun skiRun)
         {
-            int skiRunIndex = 0;
+            fillRow(_skiRuns_dt, skiRun.ID, skiRun.Name, skiRun.Vertical);
+        }
 
-            //for (int index = 0; index < _skiRuns.Count(); index++)
-            //{
-            //    if (_skiRuns[index].ID == ID)
-            //    {
-            //        skiRunIndex = index;
-            //    }
-            //}
+        /// <summary>
+        /// method to delete a ski run by ski run ID
+        /// </summary>
+        /// <param name="ID"></param>
+        public void DeleteSkiRun(int ID)
+        {
+            DataRow[] skiRuns;
 
-            return skiRunIndex;
+            // get an array of ski runs with the matching ID
+            skiRuns = _skiRuns_dt.Select("ID = " + ID.ToString());
+
+            // no ski runs with the matching ID
+            if (skiRuns.Count() < 1)
+            {
+                throw new Exception("Ski run now found.");
+            }
+            // multiple ski runs with the matching ID
+            else if (skiRuns.Count() > 1)
+            {
+                throw new Exception("More than one ski run with the id: " + ID);
+            }
+            // a unique ski run with the matching ID
+            else
+            {
+                _skiRuns_dt.Rows.Remove(skiRuns[0]);
+            }
+        }
+
+        /// <summary>
+        /// method to update an existing ski run
+        /// </summary>
+        /// <param name="skiRun">ski run object</param>
+        public void UpdateSkiRun(SkiRun skiRun)
+        {
+            DataRow[] skiRuns;
+            int ID = skiRun.ID;
+
+            // get an array of ski runs with the matching ID
+            skiRuns = _skiRuns_dt.Select("ID = " + ID.ToString());
+
+            // no ski runs with the matching ID
+            if (skiRuns.Count() < 1)
+            {
+                throw new Exception("Ski run now found.");
+            }
+            // multiple ski runs with the matching ID
+            else if (skiRuns.Count() > 1)
+            {
+                throw new Exception("More than one ski run with the id: " + ID);
+            }
+            // a unique ski run with the matching ID
+            else
+            {
+                skiRuns[0]["ID"] = skiRun.ID;
+                skiRuns[0]["Name"] = skiRun.Name;
+                skiRuns[0]["Vertical"] = skiRun.Vertical;
+            }
         }
 
         /// <summary>
@@ -154,13 +198,19 @@ namespace SkiRunRater
         {
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
 
-            //foreach (var skiRun in _skiRuns)
-            //{
-            //    if ((skiRun.Vertical >= minimumVertical) && (skiRun.Vertical <= maximumVertical))
-            //    {
-            //        matchingSkiRuns.Add(skiRun);
-            //    }
-            //}
+            DataRow[] skiRuns;
+
+            skiRuns = _skiRuns_dt.Select("Vertical > 500");
+
+            foreach (DataRow skiRun in skiRuns)
+            {
+                matchingSkiRuns.Add(new SkiRun() 
+                {
+                    ID = int.Parse(skiRun["ID"].ToString()),
+                    Name = skiRun["Name"].ToString(),
+                    Vertical = int.Parse(skiRun["Vertical"].ToString()),
+                });
+            }
 
             return matchingSkiRuns;
         }
@@ -189,6 +239,7 @@ namespace SkiRunRater
         /// </summary>
         public void Dispose()
         {
+            WriteSkiRunsData();
             _skiRuns_ds.Dispose();
         }
     }
