@@ -196,12 +196,19 @@ namespace SkiRunRater
         /// <returns></returns>
         public List<SkiRun> QueryByVertical(int minimumVertical, int maximumVertical)
         {
+            // create a list to hold the matching ski runs
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
-
+            
+            // create an array of DataRows to hold the matching ski runs
             DataRow[] skiRuns;
 
-            skiRuns = _skiRuns_dt.Select("Vertical > 500");
+            // generate the a query string based on the values of the arguements sent
+            string queryString = String.Format("Vertical > {0} AND Vertical < {1}", minimumVertical, maximumVertical);
 
+            // use the Select method to fill the array of ski runs
+            skiRuns = _skiRuns_dt.Select(queryString);
+
+            // for each row in the array, create a new SkiRun object and add it to the list
             foreach (DataRow skiRun in skiRuns)
             {
                 matchingSkiRuns.Add(new SkiRun() 
