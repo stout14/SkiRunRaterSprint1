@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint2.Starter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint2.Solution", "SkiRunRater.Sprint2.Solution\SkiRunRater.Sprint2.Solution.csproj", "{F80AA9A5-D15F-4062-8355-E0954A4BB94D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint3.Solution", "SkiRunRater.Sprint3.Starter\SkiRunRater.Sprint3.Solution.csproj", "{662371F8-0BC4-45F7-B113-CD45A0E79DB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Sprint3.Solution", "SkiRunRater.Sprint3.Solution\SkiRunRater.Sprint3.Solution.csproj", "{662371F8-0BC4-45F7-B113-CD45A0E79DB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiRunRater.Documentation", "SkiRunRater.Documentation\SkiRunRater.Documentation.csproj", "{A7D99090-7CD7-421F-9095-AFF287D9A908}"
 EndProject
