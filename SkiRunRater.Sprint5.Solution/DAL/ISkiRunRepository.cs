@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkiRunRater.Sprint4.Solution.DAL
+namespace SkiRunRater
 {
-    public interface ISkiRunRepository
+    public interface ISkiRunRepository : IDisposable
     {
-            List<SkiRun> SelectAll();
-            SkiRun SelectByID(string id);
-            void Insert(SkiRun obj);
-            void Update(SkiRun obj);
-            void Delete(string id);
-            void Save();
+        SkiRun SelectSkiRun(int userID);
+        SkiRun SelectSkiRun(string skiRunName);
+        List<SkiRun> SelectAllSkiRuns();
+        List<SkiRun> SelectSkiRuns(string selectString);
+        void InsertSkiRun(SkiRun skiRun);
+        void UpdateSkiRun(SkiRun skiRun);
+        void DeleteSkiRun(int ID);
+
     }
 }

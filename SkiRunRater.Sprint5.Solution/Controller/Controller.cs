@@ -89,12 +89,12 @@ namespace SkiRunRater
 
         private static void ListAllSkiRuns()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            SkiRunRepositorySQL skiRunRepository = new SkiRunRepositorySQL();
+            List<SkiRun> skiRuns;
 
             using (skiRunRepository)
             {
-                skiRuns = skiRunRepository.SelectAllRuns();
+                skiRuns = skiRunRepository.SelectAllSkiRuns();
                 ConsoleView.DisplayAllSkiRuns(skiRuns);
                 ConsoleView.DisplayContinuePrompt();
             }
@@ -102,21 +102,21 @@ namespace SkiRunRater
 
         private static void DisplaySkiRunDetail()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            SkiRunRepositorySQL skiRunRepository = new SkiRunRepositorySQL();
+            List<SkiRun> skiRuns;
             SkiRun skiRun = new SkiRun();
             int skiRunID;
 
             using (skiRunRepository)
             {
-                skiRuns = skiRunRepository.SelectAllRuns();
+                skiRuns = skiRunRepository.SelectAllSkiRuns();
             }
 
             skiRunID = ConsoleView.GetSkiRunID(skiRuns);
 
             using (skiRunRepository)
             {
-                skiRun = skiRunRepository.SelectByID(skiRunID);
+                skiRun = skiRunRepository.SelectSkiRun(skiRunID);
             }
 
             ConsoleView.DisplaySkiRun(skiRun);
@@ -125,7 +125,7 @@ namespace SkiRunRater
 
         private static void AddSkiRun()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
+            SkiRunRepositorySQL skiRunRepository = new SkiRunRepositorySQL();
             SkiRun skiRun = new SkiRun();
 
             skiRun = ConsoleView.AddSkiRun();
@@ -139,21 +139,21 @@ namespace SkiRunRater
 
         private static void UpdateSkiRun()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            SkiRunRepositorySQL skiRunRepository = new SkiRunRepositorySQL();
+            List<SkiRun> skiRuns = skiRunRepository.SelectAllSkiRuns();
             SkiRun skiRun = new SkiRun();
             int skiRunID;
 
             using (skiRunRepository)
             {
-                skiRuns = skiRunRepository.SelectAllRuns();
+                skiRuns = skiRunRepository.SelectAllSkiRuns();
             }
 
             skiRunID = ConsoleView.GetSkiRunID(skiRuns);
 
             using (skiRunRepository)
             {
-                skiRun = skiRunRepository.SelectByID(skiRunID);
+                skiRun = skiRunRepository.SelectSkiRun(skiRunID);
             }
 
             skiRun = ConsoleView.UpdateSkiRun(skiRun);
@@ -166,8 +166,8 @@ namespace SkiRunRater
 
         private static void DeleteSkiRun()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
-            List<SkiRun> skiRuns = skiRunRepository.SelectAllRuns();
+            SkiRunRepositorySQL skiRunRepository = new SkiRunRepositorySQL();
+            List<SkiRun> skiRuns = skiRunRepository.SelectAllSkiRuns();
             SkiRun skiRun = new SkiRun();
             int skiRunID;
             string message;
@@ -190,7 +190,7 @@ namespace SkiRunRater
 
         private static void QuerySkiRunsByVertical()
         {
-            SkiRunRepositoryXML_DS skiRunRepository = new SkiRunRepositoryXML_DS();
+            SkiRunRepositorySQL skiRunRepository = new SkiRunRepositorySQL();
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
             int minimumVertical;
             int maximumVertical;
