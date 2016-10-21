@@ -8,11 +8,6 @@ namespace SkiRunRater
 {
     public class Controller
     {
-        #region ENUMERABLES
-
-
-        #endregion
-
         #region FIELDS
 
         bool active = true;

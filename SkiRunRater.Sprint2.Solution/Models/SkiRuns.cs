@@ -11,6 +11,7 @@ namespace SkiRunRater
     public class SkiRuns
     {
         [XmlElement("SkiRun")]
-        public List<SkiRun> skiRuns = new List<SkiRun>();
+        //public List<SkiRun> skiRuns = new List<SkiRun>();
+        public List<SkiRun> skiRuns;
     }
 }
