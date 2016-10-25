@@ -59,8 +59,12 @@ namespace SkiRunRater
             DisplayMessage("Ski Manager Menu");
             DisplayMessage("");
             Console.WriteLine(
-                leftTab + "1. Display All Ski Runs Information" + Environment.NewLine +
-                leftTab + "2. Delete the Ski Run with ID = 1" + Environment.NewLine +
+                leftTab + "1. Display All Ski Runs" + Environment.NewLine +
+                leftTab + "2. Display a Ski Run Detail" + Environment.NewLine +
+                leftTab + "3. Add a Ski Run" + Environment.NewLine +
+                leftTab + "4. Delete a Ski Run" + Environment.NewLine +
+                leftTab + "5. Edit a Ski Run" + Environment.NewLine +
+                leftTab + "6. Query Ski Runs by Vertical" + Environment.NewLine +
                 leftTab + "E. Exit" + Environment.NewLine);
 
             DisplayMessage("");
@@ -73,16 +77,30 @@ namespace SkiRunRater
                     userActionChoice = AppEnum.ManagerAction.ListAllSkiRuns;
                     break;
                 case '2':
+                    userActionChoice = AppEnum.ManagerAction.DisplaySkiRunDetail;
+                    break;
+                case '3':
+                    userActionChoice = AppEnum.ManagerAction.AddSkiRun;
+                    break;
+                case '4':
                     userActionChoice = AppEnum.ManagerAction.DeleteSkiRun;
+                    break;
+                case '5':
+                    userActionChoice = AppEnum.ManagerAction.UpdateSkiRun;
+                    break;
+                case '6':
+                    userActionChoice = AppEnum.ManagerAction.QuerySkiRunsByVertical;
                     break;
                 case 'E':
                 case 'e':
                     userActionChoice = AppEnum.ManagerAction.Quit;
                     break;
                 default:
-                    Console.WriteLine(
-                        "It appears you have selected an incorrect choice." + Environment.NewLine +
-                        "Press any key to try again or the ESC key to exit.");
+                    DisplayMessage("");
+                    DisplayMessage("It appears you have selected an incorrect choice.");
+                    DisplayMessage("");
+                    DisplayMessage("Press any key to try again or the ESC key to exit.");
+
 
                     userResponse = Console.ReadKey(true);
                     if (userResponse.Key == ConsoleKey.Escape)
