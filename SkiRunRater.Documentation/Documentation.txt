@@ -1,7 +1,9 @@
 ﻿Solution:		Ski Run Rater Project
-Author:			John E Velis
-Created:		11/5/2015
-Last Modified:	11/29/2015
+Original Author:	John E Velis
+Adaptation Authors: Kevin Stout and Josiah Pippin
+Original Created:	11/5/2015
+Adaptation Created:	12/25/2016
+Last Modified:	10/25/2016
 
 Project:		Sprint 1
 Description:	Add and implement a repository to manage a text file
