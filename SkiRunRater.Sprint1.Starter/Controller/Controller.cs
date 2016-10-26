@@ -33,12 +33,16 @@ namespace SkiRunRater
         private void ApplicationControl()
         {
             SkiRunRepository skiRunRepository = new SkiRunRepository();
-
+                        
             ConsoleView.DisplayWelcomeScreen();
 
             using (skiRunRepository)
             {
                 List<SkiRun> skiRuns = skiRunRepository.GetSkiAllRuns();
+
+                int skiRunID;
+                SkiRun skiRun;
+                string message;
 
                 while (active)
                 {
@@ -50,25 +54,36 @@ namespace SkiRunRater
                     {
                         case AppEnum.ManagerAction.None:
                             break;
+
                         case AppEnum.ManagerAction.ListAllSkiRuns:
                             ConsoleView.DisplayAllSkiRuns(skiRuns);
                             ConsoleView.DisplayContinuePrompt();
                             break;
+
                         case AppEnum.ManagerAction.DisplaySkiRunDetail:
                             break;
+
                         case AppEnum.ManagerAction.DeleteSkiRun:
                             skiRunRepository.DeleteSkiRun(1);
                             ConsoleView.DisplayContinuePrompt();
                             break;
+
                         case AppEnum.ManagerAction.AddSkiRun:
+                            skiRun = ConsoleView.AddSkiRun();
+                            skiRunRepository.InsertSkiRun(skiRun);
+                            ConsoleView.DisplayContinuePrompt();
                             break;
+
                         case AppEnum.ManagerAction.UpdateSkiRun:
                             break;
+
                         case AppEnum.ManagerAction.QuerySkiRunsByVertical:
                             break;
+
                         case AppEnum.ManagerAction.Quit:
                             active = false;
                             break;
+
                         default:
                             break;
                     }
