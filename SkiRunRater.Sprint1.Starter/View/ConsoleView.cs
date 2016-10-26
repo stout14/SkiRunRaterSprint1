@@ -127,7 +127,6 @@ namespace SkiRunRater
 
             columnHeader.Append("ID".PadRight(8));
             columnHeader.Append("Ski Run".PadRight(25));
-            columnHeader.Append("Vertical in Feet".PadRight(5));
 
             DisplayMessage(columnHeader.ToString());
 
@@ -137,11 +136,49 @@ namespace SkiRunRater
 
                 skiRunInfo.Append(skiRun.ID.ToString().PadRight(8));
                 skiRunInfo.Append(skiRun.Name.PadRight(25));
-                skiRunInfo.Append(skiRun.Vertical.ToString().PadRight(5));
+
 
                 DisplayMessage(skiRunInfo.ToString());
             }
         }
+
+        public static SkiRun AddSkiRun()
+        {
+            SkiRun skiRun = new SkiRun();
+
+            DisplayReset();
+
+            DisplayMessage("");
+            Console.WriteLine(ConsoleUtil.Center("Add A Ski Run", WINDOW_WIDTH));
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the ski run ID: ");
+            skiRun.ID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the ski run name: ");
+            skiRun.Name = Console.ReadLine();
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the ski run vertical in feet: ");
+            skiRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please the ski run vertical in feet: ", Console.ReadLine());
+
+            return skiRun;
+        }
+
+        //public static int GetSkiRunID(List<SkiRun> skiRuns)
+        //{
+        //    int skiRunID = -1;
+
+        //    DisplayAllSkiRuns(skiRuns);
+
+        //    DisplayMessage("");
+        //    DisplayPromptMessage("Enter the ski run ID: ");
+
+        //    skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
+
+        //    return skiRunID;
+        //}
 
         /// <summary>
         /// reset display to default size and colors including the header
