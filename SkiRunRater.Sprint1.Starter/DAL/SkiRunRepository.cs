@@ -155,7 +155,7 @@ namespace SkiRunRater
 
             foreach (SkiRun skiRun in _skiRuns)
             {
-                if(skiRun.Vertical >= minimumVertical)
+                if((skiRun.Vertical >= minimumVertical)&&(skiRun.Vertical <= maximumVertical))
                 {
                     matchingSkiRuns.Add(skiRun);
                 }
