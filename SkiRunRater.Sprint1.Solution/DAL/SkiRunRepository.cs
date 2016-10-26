@@ -155,7 +155,7 @@ namespace SkiRunRater
             return skiRunIndex;
         }
 
-                /// <summary>
+        /// <summary>
         /// method to query the data by the vertical of each ski run in feet
         /// </summary>
         /// <param name="minimumVertical">int minimum vertical</param>
