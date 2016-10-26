@@ -113,6 +113,11 @@ namespace SkiRunRater
             return userActionChoice;
         }
 
+        public static int GetSkiRunID()
+        {
+
+        }
+
         /// <summary>
         /// method to display all ski run info
         /// </summary>
