@@ -61,6 +61,11 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.DisplaySkiRunDetail:
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                            skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
+                            ConsoleView.DisplaySkiRun(skiRun);
+                            ConsoleView.DisplayContinuePrompt();
+                                
                             break;
 
                         case AppEnum.ManagerAction.DeleteSkiRun:
