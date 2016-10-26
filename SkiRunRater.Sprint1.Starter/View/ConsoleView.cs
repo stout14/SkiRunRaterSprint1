@@ -113,9 +113,23 @@ namespace SkiRunRater
             return userActionChoice;
         }
 
-        public static int GetSkiRunID()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skiRuns"></param>
+        /// <returns></returns>
+        public static int GetSkiRunID(List<SkiRun> skiRuns)
         {
+            int skiRunID = -1;
 
+            DisplayAllSkiRuns(skiRuns);
+
+            DisplayMessage("");
+            DisplayPromptMessage("Enter the ski run ID: ");
+
+            skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
+
+            return skiRunID;
         }
 
         /// <summary>
