@@ -52,6 +52,7 @@ namespace SkiRunRater
 
             return lines;
         }
+
         /// <summary>
         /// center text as a function of the window width with padding on both sides
         /// Note: the method currently assumes the text will fit on one line

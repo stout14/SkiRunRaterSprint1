@@ -44,7 +44,7 @@ namespace SkiRunRater
                     skiRunStringList.Add(sReader.ReadLine());
                 }
             }
-            
+
             foreach (string skiRun in skiRunStringList)
             {
                 // use the Split method and the delineator on the array to separate each property into an array of properties
@@ -97,13 +97,7 @@ namespace SkiRunRater
         /// <param name="ID"></param>
         public void DeleteSkiRun(int ID)
         {
-            for (int index = 0; index < _skiRuns.Count(); index++)
-            {
-                if (_skiRuns[index].ID == ID)
-                {
-                    _skiRuns.RemoveAt(index);
-                }
-            }
+            _skiRuns.Remove(GetSkiRunByID(ID));
 
             WriteSkiRunsData();
         }
@@ -126,9 +120,17 @@ namespace SkiRunRater
         {
             SkiRun skiRun = null;
 
+            for (int index = 0; index < _skiRuns.Count(); index++)
+            {
+                if (_skiRuns[index].ID == ID)
+                {
+                    skiRun = _skiRuns[index];
+                }
+            }
+
             return skiRun;
         }
-
+        
         /// <summary>
         /// method to return a list of ski run objects
         /// </summary>
