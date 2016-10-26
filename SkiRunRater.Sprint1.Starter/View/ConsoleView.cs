@@ -166,19 +166,36 @@ namespace SkiRunRater
             return skiRun;
         }
 
-        //public static int GetSkiRunID(List<SkiRun> skiRuns)
-        //{
-        //    int skiRunID = -1;
+        public static int GetSkiRunID(List<SkiRun> skiRuns)
+        {
+            int skiRunID = -1;
 
-        //    DisplayAllSkiRuns(skiRuns);
+            DisplayAllSkiRuns(skiRuns);
 
-        //    DisplayMessage("");
-        //    DisplayPromptMessage("Enter the ski run ID: ");
+            DisplayMessage("");
+            DisplayPromptMessage("Enter the ski run ID: ");
 
-        //    skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
+            skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
 
-        //    return skiRunID;
-        //}
+            return skiRunID;
+        }
+
+        public static void DisplaySkiRun(SkiRun skiRun)
+        {
+            DisplayReset();
+
+            DisplayMessage("");
+            Console.WriteLine(ConsoleUtil.Center("Ski Run Detail", WINDOW_WIDTH));
+            DisplayMessage("");
+
+            DisplayMessage(String.Format("Ski Run: {0}", skiRun.Name));
+            DisplayMessage("");
+
+            DisplayMessage(String.Format("ID: {0}", skiRun.ID.ToString()));
+            DisplayMessage(String.Format("Vertical in Feet: {0}", skiRun.Vertical.ToString()));
+
+            DisplayMessage("");
+        }
 
         /// <summary>
         /// reset display to default size and colors including the header
