@@ -153,6 +153,14 @@ namespace SkiRunRater
         {
             List<SkiRun> matchingSkiRuns = new List<SkiRun>();
 
+            foreach (SkiRun skiRun in _skiRuns)
+            {
+                if((skiRun.Vertical >= minimumVertical)&&(skiRun.Vertical <= maximumVertical))
+                {
+                    matchingSkiRuns.Add(skiRun);
+                }
+            }
+
             return matchingSkiRuns;
         }
 
