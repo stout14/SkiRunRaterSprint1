@@ -127,8 +127,15 @@ namespace SkiRunRater
             DisplayMessage("");
             DisplayPromptMessage("Enter the ski run ID: ");
 
-            skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
-            //TODO add user validation somewhere to make sure the ID corresponds to total ski runs (probably pass count of ski runs to Validate integer response and validate there)
+            List<int> possibleIDs = new List<int>();
+
+            foreach (var run in skiRuns)
+            {
+                possibleIDs.Add(run.ID);
+            }
+
+            skiRunID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), possibleIDs);
+            
             return skiRunID;
         }
 

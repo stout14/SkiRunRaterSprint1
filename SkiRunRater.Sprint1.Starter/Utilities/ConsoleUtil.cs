@@ -12,6 +12,13 @@ namespace SkiRunRater
     /// </summary>
     public static class ConsoleUtil
     {
+        #region FIELDS
+
+        private static int _promptLocationX = 3;
+        private static int _promptLocationY = 18;
+
+        #endregion
+
         /// <summary>
         /// wraps text using a list of strings
         /// Original code from Mike Ward's website
@@ -92,9 +99,15 @@ namespace SkiRunRater
             return newStr;
         }
 
+        /// <summary>
+        /// check for a valid integer from user input
+        /// </summary>
+        /// <param name="promptMessage"></param>
+        /// <param name="userResponse"></param>
+        /// <returns></returns>
         public static int ValidateIntegerResponse(string promptMessage, string userResponse)
         {
-            int userResponseInteger = 0;
+            int userResponseInteger = -1;
 
             while (!(int.TryParse(userResponse, out userResponseInteger)))
             {
@@ -108,8 +121,42 @@ namespace SkiRunRater
                 userResponse = Console.ReadLine();
             }
 
-
             return userResponseInteger;
+        }
+
+        /// <summary>
+        /// evaluates a user input to make sure it is a valid ski run ID
+        /// </summary>
+        /// <param name="promptMessage"></param>
+        /// <param name="userResponse"></param>
+        /// <param name="possibleIDs"></param>
+        /// <returns></returns>
+        public static int ValidateSkiID(string promptMessage, string userResponse, List<int> possibleIDs)
+        {
+            int userSkiID = -1;
+
+            int currentConsoleY = Console.CursorTop;
+
+            while (!(int.TryParse(userResponse, out userSkiID)) || !possibleIDs.Contains(userSkiID))
+            {
+                Console.SetCursorPosition(_promptLocationX, currentConsoleY);
+
+                ConsoleView.DisplayMessage("");
+                ConsoleView.DisplayMessage("It appears you have not entered a valid ski run ID.");
+
+                ConsoleView.DisplayMessage("");
+                ConsoleView.DisplayPromptMessage(promptMessage);
+                ConsoleView.DisplayMessage("");
+
+                Console.SetCursorPosition(0 + 3, Console.CursorTop);
+                userResponse = Console.ReadLine();
+
+                // erase previous user entry
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.WriteLine(Center("  ", Console.WindowWidth));
+            }
+
+            return userSkiID;
         }
     }
 }

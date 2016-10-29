@@ -42,7 +42,6 @@ namespace SkiRunRater
 
                 int skiRunID;
                 SkiRun skiRun;
-                string message;
 
                 while (active)
                 {
