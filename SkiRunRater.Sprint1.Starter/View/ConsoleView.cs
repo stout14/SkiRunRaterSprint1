@@ -122,13 +122,14 @@ namespace SkiRunRater
         {
             int skiRunID = -1;
 
+            //TODO add string parameter to GetSkiRunID for a string, passed to DisplayAllSkiRuns, to display the correct heading info
             DisplayAllSkiRuns(skiRuns);
 
             DisplayMessage("");
             DisplayPromptMessage("Enter the ski run ID: ");
 
             skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
-
+            //TODO add user validation somewhere to make sure the ID corresponds to total ski runs (probably pass count of ski runs to Validate integer response and validate there)
             return skiRunID;
         }
 
@@ -161,6 +162,10 @@ namespace SkiRunRater
             }
         }
 
+        /// <summary>
+        /// meethod to add a ski run to the data list
+        /// </summary>
+        /// <returns></returns>
         public static SkiRun AddSkiRun()
         {
             SkiRun skiRun = new SkiRun();
@@ -185,20 +190,29 @@ namespace SkiRunRater
             return skiRun;
         }
 
-        public static int GetSkiRunID(List<SkiRun> skiRuns)
+        /// <summary>
+        /// goes through the steps and view info to obtain a selected ski run to update
+        /// </summary>
+        /// <param name="skiRuns"></param>
+        /// <returns></returns>
+        public static SkiRun UpdateSkiRun(List<SkiRun> skiRuns)
         {
-            int skiRunID = -1;
+            SkiRun updatedRun = new SkiRun();
 
-            DisplayAllSkiRuns(skiRuns);
-
+            //TODO move this header string to the DisplayAllSkiRecords method after it alows for string header argument
             DisplayMessage("");
-            DisplayPromptMessage("Enter the ski run ID: ");
+            Console.WriteLine(ConsoleUtil.Center("Update A Ski Run", WINDOW_WIDTH));
+            DisplayMessage("");
+            
+            updatedRun = skiRuns[GetSkiRunID(skiRuns)];
 
-            skiRunID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
-
-            return skiRunID;
+            return updatedRun;
         }
 
+        /// <summary>
+        /// displays detailed ski run info
+        /// </summary>
+        /// <param name="skiRun"></param>
         public static void DisplaySkiRun(SkiRun skiRun)
         {
             DisplayReset();

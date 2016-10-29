@@ -38,7 +38,7 @@ namespace SkiRunRater
 
             using (skiRunRepository)
             {
-                List<SkiRun> skiRuns = skiRunRepository.GetSkiAllRuns();
+                List<SkiRun> skiRuns = skiRunRepository.GetAllSkiRuns();
 
                 int skiRunID;
                 SkiRun skiRun;
@@ -65,10 +65,10 @@ namespace SkiRunRater
                             skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
                             ConsoleView.DisplaySkiRun(skiRun);
                             ConsoleView.DisplayContinuePrompt();
-                                
                             break;
 
                         case AppEnum.ManagerAction.DeleteSkiRun:
+                            //TODO add console view functionality for deleting ski run
                             skiRunRepository.DeleteSkiRun(1);
                             ConsoleView.DisplayContinuePrompt();
                             break;
@@ -80,6 +80,8 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.UpdateSkiRun:
+                            skiRun = ConsoleView.UpdateSkiRun(skiRunRepository.GetAllSkiRuns());
+                            skiRunRepository.UpdateSkiRun(skiRun);
                             break;
 
                         case AppEnum.ManagerAction.QuerySkiRunsByVertical:

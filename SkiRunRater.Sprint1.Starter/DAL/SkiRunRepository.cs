@@ -111,7 +111,6 @@ namespace SkiRunRater
             DeleteSkiRun(skiRun.ID);
             InsertSkiRun(skiRun);
             WriteSkiRunsData();
-
         }
 
         /// <summary>
@@ -138,7 +137,7 @@ namespace SkiRunRater
         /// method to return a list of ski run objects
         /// </summary>
         /// <returns>list of ski run objects</returns>
-        public List<SkiRun> GetSkiAllRuns()
+        public List<SkiRun> GetAllSkiRuns()
         {
             return _skiRuns;
         }
