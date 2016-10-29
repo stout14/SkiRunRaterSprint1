@@ -118,12 +118,11 @@ namespace SkiRunRater
         /// </summary>
         /// <param name="skiRuns"></param>
         /// <returns></returns>
-        public static int GetSkiRunID(List<SkiRun> skiRuns)
+        public static int GetSkiRunID(List<SkiRun> skiRuns, string heading)
         {
             int skiRunID = -1;
 
-            //TODO add string parameter to GetSkiRunID for a string, passed to DisplayAllSkiRuns, to display the correct heading info
-            DisplayAllSkiRuns(skiRuns);
+            DisplayAllSkiRuns(skiRuns, heading);
 
             DisplayMessage("");
             DisplayPromptMessage("Enter the ski run ID: ");
@@ -136,10 +135,17 @@ namespace SkiRunRater
         /// <summary>
         /// method to display all ski run info
         /// </summary>
-        public static void DisplayAllSkiRuns(List<SkiRun> skiRuns)
+        public static void DisplayAllSkiRuns(List<SkiRun> skiRuns, string heading)
         {
             DisplayReset();
 
+
+            if (heading != "" || heading != null)
+            {
+                DisplayMessage("");
+                Console.WriteLine(ConsoleUtil.Center(heading, WINDOW_WIDTH));
+                DisplayMessage("");
+            }
             DisplayMessage("All of the existing ski runs are displayed below;");
             DisplayMessage("");
 
@@ -204,7 +210,7 @@ namespace SkiRunRater
             Console.WriteLine(ConsoleUtil.Center("Update A Ski Run", WINDOW_WIDTH));
             DisplayMessage("");
             
-            updatedRun = skiRuns[GetSkiRunID(skiRuns)];
+            updatedRun = skiRuns[GetSkiRunID(skiRuns, "Update A Ski Run")];
 
             return updatedRun;
         }

@@ -56,12 +56,12 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.ListAllSkiRuns:
-                            ConsoleView.DisplayAllSkiRuns(skiRuns);
+                            ConsoleView.DisplayAllSkiRuns(skiRuns, "");
                             ConsoleView.DisplayContinuePrompt();
                             break;
 
                         case AppEnum.ManagerAction.DisplaySkiRunDetail:
-                            skiRunID = ConsoleView.GetSkiRunID(skiRuns);
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns, "Get Detailed Ski Run Info");
                             skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
                             ConsoleView.DisplaySkiRun(skiRun);
                             ConsoleView.DisplayContinuePrompt();
