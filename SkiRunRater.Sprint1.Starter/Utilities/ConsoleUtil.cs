@@ -105,27 +105,24 @@ namespace SkiRunRater
         /// <param name="userResponse"></param>
         /// <param name="consoleYMessageStart"></param>
         /// <returns></returns>
-        public static int ValidateIntegerResponse(string promptMessage, string userResponse, int consoleYMessageStart)
+        public static int ValidateIntegerResponse(string promptMessage, string userResponse)
         {
             int userResponseInteger = -1;
 
             while (!(int.TryParse(userResponse, out userResponseInteger)))
             {
-                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart);
+                ConsoleView.DisplayReset();
 
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayMessage("It appears you have not entered a valid integer.");
 
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayPromptMessage(promptMessage);
-                ConsoleView.DisplayMessage("");
-
-                // erase previous response
-                Console.WriteLine(Center("  ", Console.WindowWidth));
-
-                Console.SetCursorPosition(0 + 3, Console.CursorTop - 1);
                 userResponse = Console.ReadLine();
+
+
             }
+
 
             return userResponseInteger;
         }
