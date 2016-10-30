@@ -15,7 +15,6 @@ namespace SkiRunRater
         #region FIELDS
 
         private static int _promptLocationX = 3;
-        private static int _promptLocationY = 18;
 
         #endregion
 
@@ -104,20 +103,27 @@ namespace SkiRunRater
         /// </summary>
         /// <param name="promptMessage"></param>
         /// <param name="userResponse"></param>
+        /// <param name="consoleYMessageStart"></param>
         /// <returns></returns>
-        public static int ValidateIntegerResponse(string promptMessage, string userResponse)
+        public static int ValidateIntegerResponse(string promptMessage, string userResponse, int consoleYMessageStart)
         {
             int userResponseInteger = -1;
 
             while (!(int.TryParse(userResponse, out userResponseInteger)))
             {
-                ConsoleView.DisplayReset();
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart);
 
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayMessage("It appears you have not entered a valid integer.");
 
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayPromptMessage(promptMessage);
+                ConsoleView.DisplayMessage("");
+
+                // erase previous response
+                Console.WriteLine(Center("  ", Console.WindowWidth));
+
+                Console.SetCursorPosition(0 + 3, Console.CursorTop - 1);
                 userResponse = Console.ReadLine();
             }
 
@@ -129,14 +135,13 @@ namespace SkiRunRater
         /// </summary>
         /// <param name="promptMessage"></param>
         /// <param name="userResponse"></param>
-        /// <param name="possibleIDs"></param>
+        /// <param name="skiRuns"></param>
         /// <param name="newID"></param>
+        /// <param name="consoleYMessageStart"></param>
         /// <returns></returns>
-        public static int ValidateSkiID(string promptMessage, string userResponse, List<SkiRun> skiRuns, bool newID)
+        public static int ValidateSkiID(string promptMessage, string userResponse, List<SkiRun> skiRuns, bool newID, int consoleYMessageStart)
         {
             int userSkiID = -1;
-
-            int currentConsoleY = Console.CursorTop;
 
             List<int> possibleIDs = new List<int>();
 
@@ -157,7 +162,7 @@ namespace SkiRunRater
                     (!possibleIDs.Contains(userSkiID) && !newID) || 
                     (possibleIDs.Contains(userSkiID) && newID)  )
             {
-                Console.SetCursorPosition(_promptLocationX, currentConsoleY);
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart);
 
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayMessage(invalidEntryText);
@@ -166,12 +171,11 @@ namespace SkiRunRater
                 ConsoleView.DisplayPromptMessage(promptMessage);
                 ConsoleView.DisplayMessage("");
 
-                Console.SetCursorPosition(0 + 3, Console.CursorTop);
-                userResponse = Console.ReadLine();
-
-                // erase previous user entry
-                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                // erase previous response
                 Console.WriteLine(Center("  ", Console.WindowWidth));
+
+                Console.SetCursorPosition(0 + 3, Console.CursorTop - 1);
+                userResponse = Console.ReadLine();
             }
 
             return userSkiID;

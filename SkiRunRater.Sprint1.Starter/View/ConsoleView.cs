@@ -124,12 +124,15 @@ namespace SkiRunRater
         {
             int skiRunID = -1;
 
+            // variable used to store current y position in the console for user validation messages
+            int currentConsoleY;
+
             DisplayAllSkiRuns(skiRuns, heading);
 
+            currentConsoleY = Console.CursorTop;
             DisplayMessage("");
             DisplayPromptMessage("Enter the ski run ID: ");
-
-            skiRunID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, newID);
+            skiRunID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, newID, currentConsoleY);
             
             return skiRunID;
         }
@@ -185,7 +188,7 @@ namespace SkiRunRater
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the ski run ID: ");
-            skiRun.ID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, true);
+            skiRun.ID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, true, Console.CursorTop - 2);
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the ski run name: ");
@@ -193,7 +196,7 @@ namespace SkiRunRater
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the ski run vertical in feet: ");
-            skiRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please the ski run vertical in feet: ", Console.ReadLine());
+            skiRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please the ski run vertical in feet: ", Console.ReadLine(), Console.CursorTop - 2);
 
             return skiRun;
         }
@@ -206,9 +209,30 @@ namespace SkiRunRater
         public static SkiRun UpdateSkiRun(List<SkiRun> skiRuns)
         {
             SkiRun updatedRun = new SkiRun();
+            int updatedRunID = GetSkiRunID(skiRuns, "Update A Ski Run", false);
 
-            //TODO move this header string to the DisplayAllSkiRecords method after it alows for string header argument          
-            updatedRun = skiRuns[GetSkiRunID(skiRuns, "Update A Ski Run", false)];
+            for (int index = 0; index < skiRuns.Count(); index++)
+            {
+                if (skiRuns[index].ID == updatedRunID)
+                {
+                    updatedRun = skiRuns[index];
+                }
+            }
+
+            DisplayReset();
+
+            DisplayMessage("Selected run info:");
+            DisplayMessage("");
+            DisplayMessage("Name: " + updatedRun.Name);
+            DisplayMessage("Vertical feet: " + updatedRun.Vertical);
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the updated ski run name: ");
+            updatedRun.Name = Console.ReadLine();
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter the updated ski run vertical in feet: ");
+            updatedRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please input the updated ski run vertical in feet: ", Console.ReadLine(), Console.CursorTop - 2);
 
             return updatedRun;
         }

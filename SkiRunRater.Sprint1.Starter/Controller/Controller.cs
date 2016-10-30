@@ -85,6 +85,7 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.QuerySkiRunsByVertical:
+                            ConsoleView.DisplayContinuePrompt();
                             break;
 
                         case AppEnum.ManagerAction.Quit:
