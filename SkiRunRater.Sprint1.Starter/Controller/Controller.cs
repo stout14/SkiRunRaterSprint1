@@ -67,20 +67,21 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.DeleteSkiRun:
-                            //TODO add console view functionality for deleting ski run
-                            skiRunRepository.DeleteSkiRun(1);
-                            ConsoleView.DisplayContinuePrompt();
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns, "Delete Ski Run Record", false);
+                            skiRunRepository.DeleteSkiRun(skiRunID);
+                            ConsoleView.DisplayContinuePrompt("Run Deleted");
                             break;
 
                         case AppEnum.ManagerAction.AddSkiRun:
                             skiRun = ConsoleView.AddSkiRun(skiRuns);
                             skiRunRepository.InsertSkiRun(skiRun);
-                            ConsoleView.DisplayContinuePrompt();
+                            ConsoleView.DisplayContinuePrompt("Run Added");
                             break;
 
                         case AppEnum.ManagerAction.UpdateSkiRun:
-                            skiRun = ConsoleView.UpdateSkiRun(skiRunRepository.GetAllSkiRuns());
+                            skiRun = ConsoleView.UpdateSkiRun(skiRuns);
                             skiRunRepository.UpdateSkiRun(skiRun);
+                            ConsoleView.DisplayContinuePrompt("Run Updated");
                             break;
 
                         case AppEnum.ManagerAction.QuerySkiRunsByVertical:

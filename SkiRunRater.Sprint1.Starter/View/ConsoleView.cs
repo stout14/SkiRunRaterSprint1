@@ -272,6 +272,24 @@ namespace SkiRunRater
             Console.CursorVisible = true;
         }
 
+        /// <summary>
+        /// displays the continue prompt with a custom message
+        /// </summary>
+        /// <param name="customMessage"></param>
+        public static void DisplayContinuePrompt(string customMessage)
+        {
+            Console.CursorVisible = false;
+
+            Console.WriteLine();
+
+            Console.WriteLine(ConsoleUtil.Center(customMessage, WINDOW_WIDTH));
+            Console.WriteLine(ConsoleUtil.Center("Press any key to continue.", WINDOW_WIDTH));
+            ConsoleKeyInfo response = Console.ReadKey();
+
+            Console.WriteLine();
+
+            Console.CursorVisible = true;
+        }
 
         /// <summary>
         /// display the Exit prompt
