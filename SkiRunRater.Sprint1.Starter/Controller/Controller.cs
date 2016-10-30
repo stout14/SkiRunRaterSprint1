@@ -60,7 +60,7 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.DisplaySkiRunDetail:
-                            skiRunID = ConsoleView.GetSkiRunID(skiRuns, "Get Detailed Ski Run Info");
+                            skiRunID = ConsoleView.GetSkiRunID(skiRuns, "Get Detailed Ski Run Info", false);
                             skiRun = skiRunRepository.GetSkiRunByID(skiRunID);
                             ConsoleView.DisplaySkiRun(skiRun);
                             ConsoleView.DisplayContinuePrompt();
@@ -73,7 +73,7 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.AddSkiRun:
-                            skiRun = ConsoleView.AddSkiRun();
+                            skiRun = ConsoleView.AddSkiRun(skiRuns);
                             skiRunRepository.InsertSkiRun(skiRun);
                             ConsoleView.DisplayContinuePrompt();
                             break;

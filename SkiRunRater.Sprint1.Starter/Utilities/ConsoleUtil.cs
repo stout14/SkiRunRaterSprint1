@@ -125,24 +125,42 @@ namespace SkiRunRater
         }
 
         /// <summary>
-        /// evaluates a user input to make sure it is a valid ski run ID
+        /// evaluates a user input to make sure it is a valid ski run ID (either as a new entry or existing)
         /// </summary>
         /// <param name="promptMessage"></param>
         /// <param name="userResponse"></param>
         /// <param name="possibleIDs"></param>
+        /// <param name="newID"></param>
         /// <returns></returns>
-        public static int ValidateSkiID(string promptMessage, string userResponse, List<int> possibleIDs)
+        public static int ValidateSkiID(string promptMessage, string userResponse, List<SkiRun> skiRuns, bool newID)
         {
             int userSkiID = -1;
 
             int currentConsoleY = Console.CursorTop;
 
-            while (!(int.TryParse(userResponse, out userSkiID)) || !possibleIDs.Contains(userSkiID))
+            List<int> possibleIDs = new List<int>();
+
+            foreach (var run in skiRuns)
+            {
+                possibleIDs.Add(run.ID);
+            }
+
+            // change invalid entry guidance text based on whether or not a new ski run is being requested
+            string invalidEntryText = "It appears you have not entered a valid ski run ID.";
+
+            if (newID)
+            { invalidEntryText = "It appears you have not entered a valid or new ski run ID."; }
+
+            // evalutes to see if user entry is a valid integer, then based on whether a new or old id is required, if a correct ID
+            // number was given
+            while ( !(int.TryParse(userResponse, out userSkiID)) || 
+                    (!possibleIDs.Contains(userSkiID) && !newID) || 
+                    (possibleIDs.Contains(userSkiID) && newID)  )
             {
                 Console.SetCursorPosition(_promptLocationX, currentConsoleY);
 
                 ConsoleView.DisplayMessage("");
-                ConsoleView.DisplayMessage("It appears you have not entered a valid ski run ID.");
+                ConsoleView.DisplayMessage(invalidEntryText);
 
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayPromptMessage(promptMessage);

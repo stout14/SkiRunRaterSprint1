@@ -114,11 +114,13 @@ namespace SkiRunRater
         }
 
         /// <summary>
-        /// 
+        /// gets a user ID from the user (either new or existing)
         /// </summary>
         /// <param name="skiRuns"></param>
+        /// <param name="heading"></param>
+        /// <param name="newID"></param>
         /// <returns></returns>
-        public static int GetSkiRunID(List<SkiRun> skiRuns, string heading)
+        public static int GetSkiRunID(List<SkiRun> skiRuns, string heading, bool newID)
         {
             int skiRunID = -1;
 
@@ -127,14 +129,7 @@ namespace SkiRunRater
             DisplayMessage("");
             DisplayPromptMessage("Enter the ski run ID: ");
 
-            List<int> possibleIDs = new List<int>();
-
-            foreach (var run in skiRuns)
-            {
-                possibleIDs.Add(run.ID);
-            }
-
-            skiRunID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), possibleIDs);
+            skiRunID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, newID);
             
             return skiRunID;
         }
@@ -179,7 +174,7 @@ namespace SkiRunRater
         /// meethod to add a ski run to the data list
         /// </summary>
         /// <returns></returns>
-        public static SkiRun AddSkiRun()
+        public static SkiRun AddSkiRun(List<SkiRun> skiRuns)
         {
             SkiRun skiRun = new SkiRun();
 
@@ -190,7 +185,7 @@ namespace SkiRunRater
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the ski run ID: ");
-            skiRun.ID = ConsoleUtil.ValidateIntegerResponse("Please enter the ski run ID: ", Console.ReadLine());
+            skiRun.ID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, true);
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the ski run name: ");
@@ -212,12 +207,8 @@ namespace SkiRunRater
         {
             SkiRun updatedRun = new SkiRun();
 
-            //TODO move this header string to the DisplayAllSkiRecords method after it alows for string header argument
-            DisplayMessage("");
-            Console.WriteLine(ConsoleUtil.Center("Update A Ski Run", WINDOW_WIDTH));
-            DisplayMessage("");
-            
-            updatedRun = skiRuns[GetSkiRunID(skiRuns, "Update A Ski Run")];
+            //TODO move this header string to the DisplayAllSkiRecords method after it alows for string header argument          
+            updatedRun = skiRuns[GetSkiRunID(skiRuns, "Update A Ski Run", false)];
 
             return updatedRun;
         }
