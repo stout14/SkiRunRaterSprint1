@@ -138,6 +138,53 @@ namespace SkiRunRater
         }
 
         /// <summary>
+        /// gets minimum and maximum ski run query values
+        /// </summary>
+        /// <returns></returns>
+        public static int[] GetVerticalQueryInfo()
+        {
+            DisplayReset();
+
+            DisplayMessage("");
+            Console.WriteLine(ConsoleUtil.Center("Get Ski Run List Within Vertical Range", WINDOW_WIDTH));
+            DisplayMessage("");
+
+            DisplayPromptMessage("Enter a minumum vertical hieght for the filter:");
+            int verticalInfoMin = ConsoleUtil.ValidateIntegerResponse("Please enter a minumum vertical hieght (in feet):", Console.ReadLine(), Console.CursorTop-2);
+            DisplayMessage("");
+
+            int consoleYReset = Console.CursorTop;
+            DisplayMessage("");
+            DisplayPromptMessage("Enter a maximum vertical hieght for the filter:");
+            int verticalInfoMax = ConsoleUtil.ValidateIntegerResponse("Please enter a maximum vertical hieght (in feet):", Console.ReadLine(), Console.CursorTop -2);
+            DisplayMessage("");
+
+            while (verticalInfoMax < verticalInfoMin)
+            {
+                // erase previous response
+                Console.CursorTop = consoleYReset + 1;
+                Console.WriteLine(ConsoleUtil.Center("  ", Console.WindowWidth));
+                Console.CursorTop = consoleYReset + 2;
+                Console.WriteLine(ConsoleUtil.Center("  ", Console.WindowWidth));
+                Console.CursorTop = consoleYReset + 3;
+                Console.WriteLine(ConsoleUtil.Center("  ", Console.WindowWidth));
+                Console.CursorTop = consoleYReset + 4;
+                Console.WriteLine(ConsoleUtil.Center("  ", Console.WindowWidth));
+
+                Console.CursorTop = consoleYReset;
+                DisplayMessage("");
+                DisplayPromptMessage("Maximum is less than chosen minumum!");
+                DisplayMessage("");
+                DisplayPromptMessage("Enter a maximum vertical hieght (in feet) greater than " + verticalInfoMin + ":");
+                verticalInfoMax = ConsoleUtil.ValidateIntegerResponse("Please enter a maximum vertical hieght (in feet) greater than " + verticalInfoMin + " asdfasd:", Console.ReadLine(), consoleYReset);
+            }
+
+            int[] queryInfo = new int[] { verticalInfoMin, verticalInfoMax };
+
+            return queryInfo;
+        }
+
+        /// <summary>
         /// method to display all ski run info
         /// </summary>
         public static void DisplayAllSkiRuns(List<SkiRun> skiRuns, string heading)

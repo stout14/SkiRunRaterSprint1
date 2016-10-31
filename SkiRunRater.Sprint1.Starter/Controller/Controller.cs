@@ -85,6 +85,8 @@ namespace SkiRunRater
                             break;
 
                         case AppEnum.ManagerAction.QuerySkiRunsByVertical:
+                            int[] queryInfo = ConsoleView.GetVerticalQueryInfo();
+                            ConsoleView.DisplayAllSkiRuns(skiRunRepository.QueryByVertical(queryInfo[0], queryInfo[1]), "Ski Runs Between " + queryInfo[0] + " and " + queryInfo[1] + " Feet");
                             ConsoleView.DisplayContinuePrompt();
                             break;
 

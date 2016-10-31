@@ -16,9 +16,13 @@ namespace SkiRunRater
 
             // initialize the IList of high scores - note: no instantiation for an interface
             skiRuns.Add(new SkiRun() { ID = 1, Name = "Buck", Vertical = 325 });
-            skiRuns.Add(new SkiRun() { ID = 2, Name = "Buckaroo", Vertical = 325 });
-            skiRuns.Add(new SkiRun() { ID = 3, Name = "Hoot Owl", Vertical = 325 });
-            skiRuns.Add(new SkiRun() { ID = 4, Name = "Shelburg's Chute", Vertical = 325 });
+            skiRuns.Add(new SkiRun() { ID = 2, Name = "Buckaroo", Vertical = 525 });
+            skiRuns.Add(new SkiRun() { ID = 3, Name = "Hoot Owl", Vertical = 996 });
+            skiRuns.Add(new SkiRun() { ID = 4, Name = "Shelburg's Chute", Vertical = 652 });
+            skiRuns.Add(new SkiRun() { ID = 5, Name = "Wombat Combat", Vertical = 1120 });
+            skiRuns.Add(new SkiRun() { ID = 6, Name = "Mariner's Saw", Vertical = 813 });
+            skiRuns.Add(new SkiRun() { ID = 7, Name = "The Back Way", Vertical = 1509 });
+            skiRuns.Add(new SkiRun() { ID = 8, Name = "Onion Knight", Vertical = 1323 });
 
             WriteAllSkiRuns(skiRuns, DataSettings.dataFilePath);
         }

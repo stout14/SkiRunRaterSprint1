@@ -111,8 +111,17 @@ namespace SkiRunRater
 
             while (!(int.TryParse(userResponse, out userResponseInteger)))
             {
-                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart);
+                // be sure previous prompt message is erased/covered over
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart + 1);
+                Console.WriteLine(Center("  ", Console.WindowWidth));
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart + 2);
+                Console.WriteLine(Center("  ", Console.WindowWidth));
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart + 3);
+                Console.WriteLine(Center("  ", Console.WindowWidth));
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart + 4);
+                Console.WriteLine(Center("  ", Console.WindowWidth));
 
+                Console.SetCursorPosition(_promptLocationX, consoleYMessageStart);
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayMessage("It appears you have not entered a valid integer.");
 
