@@ -93,7 +93,7 @@ namespace SkiRunRater
 
         public static int ValidateIntegerResponse(string promptMessage, string userResponse)
         {
-            int userResponseInteger = 0;
+            int userResponseInteger = -1;
 
             while (!(int.TryParse(userResponse, out userResponseInteger)))
             {
@@ -105,6 +105,8 @@ namespace SkiRunRater
                 ConsoleView.DisplayMessage("");
                 ConsoleView.DisplayPromptMessage(promptMessage);
                 userResponse = Console.ReadLine();
+
+
             }
 
 
