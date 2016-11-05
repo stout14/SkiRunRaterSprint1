@@ -133,7 +133,7 @@ namespace SkiRunRater
             DisplayMessage("");
             DisplayPromptMessage("Enter the ski run ID: ");
             skiRunID = ConsoleUtil.ValidateSkiID("Please enter the ski run ID: ", Console.ReadLine(), skiRuns, newID, currentConsoleY);
-            
+
             return skiRunID;
         }
 
@@ -150,13 +150,13 @@ namespace SkiRunRater
             DisplayMessage("");
 
             DisplayPromptMessage("Enter a minumum vertical hieght for the filter:");
-            int verticalInfoMin = ConsoleUtil.ValidateIntegerResponse("Please enter a minumum vertical hieght (in feet):", Console.ReadLine(), Console.CursorTop-2);
+            int verticalInfoMin = ConsoleUtil.ValidateIntegerResponse("Please enter a minumum vertical hieght (in feet):", Console.ReadLine(), Console.CursorTop - 2);
             DisplayMessage("");
 
             int consoleYReset = Console.CursorTop;
             DisplayMessage("");
             DisplayPromptMessage("Enter a maximum vertical hieght for the filter:");
-            int verticalInfoMax = ConsoleUtil.ValidateIntegerResponse("Please enter a maximum vertical hieght (in feet):", Console.ReadLine(), Console.CursorTop -2);
+            int verticalInfoMax = ConsoleUtil.ValidateIntegerResponse("Please enter a maximum vertical hieght (in feet):", Console.ReadLine(), Console.CursorTop - 2);
             DisplayMessage("");
 
             while (verticalInfoMax < verticalInfoMin)
@@ -243,7 +243,7 @@ namespace SkiRunRater
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the ski run vertical in feet: ");
-            skiRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please the ski run vertical in feet: ", Console.ReadLine());
+            skiRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please the ski run vertical in feet: ", Console.ReadLine(), Console.CursorTop - 2);
 
             return skiRun;
         }
@@ -279,7 +279,7 @@ namespace SkiRunRater
             DisplayMessage("");
 
             DisplayPromptMessage("Enter the updated ski run vertical in feet: ");
-            updatedRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please input the updated ski run vertical in feet: ", Console.ReadLine());
+            updatedRun.Vertical = ConsoleUtil.ValidateIntegerResponse("Please input the updated ski run vertical in feet: ", Console.ReadLine(), Console.CursorTop - 2);
 
             return updatedRun;
         }
@@ -466,72 +466,6 @@ namespace SkiRunRater
             }
 
             Console.Write(messageLines[messageLines.Count() - 1]);
-        }
-
-        public static void GetVerticalQueryMinMaxValues(out int minimumVertical, out int maximumVertical)
-        {
-            minimumVertical = 0;
-            maximumVertical = 0;
-            string userResponse = "";
-
-            DisplayReset();
-
-            DisplayMessage("");
-            Console.WriteLine(ConsoleUtil.Center("Query Ski Runs by Vertical", WINDOW_WIDTH));
-            DisplayMessage("");
-
-            DisplayPromptMessage("Enter the minimum vertical: ");
-            userResponse = Console.ReadLine();
-            if (userResponse != "")
-            {
-                minimumVertical = ConsoleUtil.ValidateIntegerResponse("Please enter the minimum vertical in feet.", userResponse);
-            }
-
-            DisplayMessage("");
-
-            DisplayPromptMessage("Enter the maximum vertical: ");
-            userResponse = Console.ReadLine();
-            if (userResponse != "")
-            {
-                maximumVertical = ConsoleUtil.ValidateIntegerResponse("Please enter the maximum vertical in feet.", userResponse);
-            }
-
-            DisplayMessage("");
-
-            DisplayMessage(String.Format("You have entered {0} feet as the minimum value and {1} as the maximum value.", minimumVertical, maximumVertical));
-
-            DisplayMessage("");
-
-            DisplayContinuePrompt();
-        }
-
-        public static void DisplayQueryResults(List<SkiRun> matchingSkiRuns)
-        {
-            DisplayReset();
-
-            DisplayMessage("");
-            Console.WriteLine(ConsoleUtil.Center("Display Ski Run Query Results", WINDOW_WIDTH));
-            DisplayMessage("");
-
-            DisplayMessage("All of the matching ski runs are displayed below;");
-            DisplayMessage("");
-
-            StringBuilder columnHeader = new StringBuilder();
-
-            columnHeader.Append("ID".PadRight(8));
-            columnHeader.Append("Ski Run".PadRight(25));
-
-            DisplayMessage(columnHeader.ToString());
-
-            foreach (SkiRun skiRun in matchingSkiRuns)
-            {
-                StringBuilder skiRunInfo = new StringBuilder();
-
-                skiRunInfo.Append(skiRun.ID.ToString().PadRight(8));
-                skiRunInfo.Append(skiRun.Name.PadRight(25));
-
-                DisplayMessage(skiRunInfo.ToString());
-            }
         }
 
 
